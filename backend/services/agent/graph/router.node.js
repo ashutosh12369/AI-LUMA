@@ -57,6 +57,18 @@ if(state.file){
 
     }
 
+    if(state.file.mimetype==="text/csv" || state.file.originalname.endsWith(".csv") || state.file.originalname.endsWith(".xlsx")){
+
+        return{
+
+            ...state,
+
+            agent:"data"
+
+        };
+
+    }
+
 }
 
 
@@ -76,6 +88,8 @@ Available agents:
 - pdf
 - ppt
 - image 
+- data
+- github
 
 Rules:
 
@@ -107,12 +121,25 @@ ppt:
 Questions about generate ppts
 or ppt context.
 
+data:
+Process CSV or Excel data,
+generate charts,
+data visualization.
+
+github:
+Read GitHub repositories,
+find bugs in repo,
+commit code to GitHub,
+list repos.
+
 Return ONLY one word:
 
 chat
 search
 coding
 pdf
+data
+github
 
 User Query:
 

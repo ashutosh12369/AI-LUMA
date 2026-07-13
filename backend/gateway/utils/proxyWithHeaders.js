@@ -27,6 +27,10 @@ export const proxyWithUser =
       srcReq.user.avatar
 
     }
+    
+    if (srcReq.headers["x-github-token"]) {
+      proxyReqOpts.headers["x-github-token"] = srcReq.headers["x-github-token"];
+    }
 
     return proxyReqOpts;
 

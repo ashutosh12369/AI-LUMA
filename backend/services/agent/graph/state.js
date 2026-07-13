@@ -35,6 +35,15 @@ Annotation.Root({
  Annotation(),
 
  pdfContext:
+ Annotation(),
+
+ githubToken:
+ Annotation(),
+
+ isAutonomous:
+ Annotation(),
+
+ taskPlan:
  Annotation()
 
 });

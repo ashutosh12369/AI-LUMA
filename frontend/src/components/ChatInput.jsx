@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Send, Paperclip,  Square, Zap, MessageSquare, Code2, Presentation, Image as ImageIcon, Globe, FileText,X } from "lucide-react";
+import { Send, Paperclip,  Square, Zap, MessageSquare, Code2, Presentation, Image as ImageIcon, Globe, FileText, X, BarChart, Github } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage, setArtifacts, setIsLoading } from "../redux/message.slice";
 import { sendPrompt } from "../features/agent.api";
@@ -16,6 +16,7 @@ export default function ChatInput({
   const [selectedAgent, setSelectedAgent] =useState("auto");
   const [value, setValue] = useState("");
 const [isListening, setIsListening] = useState(false);
+const [isAutonomous, setIsAutonomous] = useState(false);
 
 const recognitionRef = useRef(null);
   const dispatch = useDispatch();
@@ -45,7 +46,11 @@ ppt:"Create a presentation about...",
 
 image:"Describe the image...",
 
-search:"Search the web..."
+search:"Search the web...",
+
+data:"Upload CSV for data visualization...",
+
+github:"Chat with your GitHub repos..."
 
 };
 
@@ -91,6 +96,18 @@ search:"Search the web..."
     id:"search",
     icon:Globe,
     label:"Search"
+  },
+
+  {
+    id:"data",
+    icon:BarChart,
+    label:"Data"
+  },
+
+  {
+    id:"github",
+    icon:Github,
+    label:"GitHub"
   }
 
 ];
@@ -225,6 +242,11 @@ formData.append(
     selectedAgent
 );
 
+formData.append(
+    "isAutonomous",
+    isAutonomous
+);
+
 if(selectedFile){
 
     formData.append(
@@ -283,6 +305,17 @@ catch(error){
 
 
     <div className="flex w-[80%] gap-2 pr-2 flex-wrap">
+
+    <button
+      onClick={() => setIsAutonomous(!isAutonomous)}
+      className={`
+        flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium border transition-all
+        ${isAutonomous ? "bg-amber-500 text-white border-transparent shadow-[0_1px_8px_rgba(245,158,11,.35)]" : "bg-white/[0.03] text-slate-400 border-white/[0.06] hover:bg-white/[0.07]"}
+      `}
+    >
+      <Zap size={14} className={isAutonomous ? "text-white" : "text-slate-500"} />
+      Auto
+    </button>
 
     {agents.map((agent) => {
 
@@ -355,6 +388,20 @@ selectedFile.type==="application/pdf"
 size={16}
 
 className="text-red-400"
+
+/>
+
+:
+
+selectedFile.name.endsWith(".csv") || selectedFile.name.endsWith(".xlsx")
+
+?
+
+<BarChart
+
+size={16}
+
+className="text-green-400"
 
 />
 
@@ -467,7 +514,7 @@ type="file"
 
 hidden
 
-accept=".pdf,image/*"
+accept=".pdf,image/*,.csv,.xlsx"
 
 onChange={(e)=>{
 

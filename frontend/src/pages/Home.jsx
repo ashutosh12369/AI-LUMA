@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { FaGoogle } from "react-icons/fa";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 import ArtifactPanel from "../components/ArtifactPanel";
 import ChatArea from "../components/ChatArea";
 import Sidebar from "../components/Sidebar";
 import api from "../utils/axios";
 import { setUserData } from "../redux/user.slice";
-import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../../firebase";
+import { signInWithPopup, GithubAuthProvider } from "firebase/auth";
+import { auth, googleProvider, githubProvider } from "../../firebase";
 
 function Home() {
   const { userData } = useSelector(state => state.user);
@@ -25,6 +25,26 @@ const login=async (token)=>{
     
      const token =await result.user.getIdToken();
      await login(token)
+  };
+
+  const handleGithubLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, githubProvider);
+      
+      // Get the GitHub access token (needed for the GitHub agent)
+      const credential = GithubAuthProvider.credentialFromResult(result);
+      const githubToken = credential.accessToken;
+      
+      // Save it in local storage or pass it to backend so agent can use it
+      if (githubToken) {
+        localStorage.setItem("github_token", githubToken);
+      }
+
+      const token = await result.user.getIdToken();
+      await login(token);
+    } catch (error) {
+      console.error("GitHub login error:", error);
+    }
   };
 
   return (
@@ -48,6 +68,14 @@ const login=async (token)=>{
 >
   <FaGoogle size={15} className="text-white" />
   Continue with Google
+</button>
+
+<button
+  onClick={handleGithubLogin}
+  className="w-full flex items-center justify-center gap-3 py-[11px] rounded-xl text-sm font-medium text-white bg-[#24292e] hover:bg-[#2f363d] active:bg-[#1a1e22] border border-white/10 shadow-lg shadow-black/20 hover:shadow-black/30 transition-all duration-150 cursor-pointer"
+>
+  <FaGithub size={15} className="text-white" />
+  Continue with GitHub
 </button>
 
           </div>

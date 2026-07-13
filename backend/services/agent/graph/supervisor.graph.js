@@ -36,6 +36,9 @@ import { pptAgent } from "../agents/ppt.agent.js";
 import { imageAgent } from "../agents/imageGen.agent.js";
 import { visionAgent } from "../agents/vision.agent.js";
 import { pdfRagAgent } from "../agents/pdfRag.agent.js";
+import { dataAgent } from "../agents/data.agent.js";
+import { githubAgent } from "../agents/github.agent.js";
+import { plannerNode } from "./planner.node.js";
 
 const workflow =
 new StateGraph(
@@ -82,6 +85,18 @@ workflow.addNode(
  "pdf_rag",
  pdfRagAgent
 );
+workflow.addNode(
+ "data",
+ dataAgent
+);
+workflow.addNode(
+ "github",
+ githubAgent
+);
+workflow.addNode(
+ "planner",
+ plannerNode
+);
 workflow.addEdge(
  "__start__",
  "router"
@@ -114,6 +129,10 @@ workflow.addConditionalEdges(
     return "vision";
     case "pdf_rag":
     return "pdf_rag";
+    case "data":
+    return "data";
+    case "github":
+    return "github";
 
    default:
     return "chat";
@@ -134,49 +153,38 @@ workflow.addConditionalEdges(
    ppt:"ppt",
    image:"image",
    vision:"vision",
-   pdf_rag:"pdf_rag"
+   pdf_rag:"pdf_rag",
+   data:"data",
+   github:"github"
 
  }
 
 );
 
-workflow.addEdge(
-  "coding",
-  "__end__"
-);
-workflow.addEdge(
-  "image",
-  "__end__"
-);
+const routeAfterAgent = (state) => {
+  if (state.isAutonomous) return "planner";
+  return "__end__";
+};
 
-workflow.addEdge(
-  "search",
-  "chat"
-);
+workflow.addConditionalEdges("coding", routeAfterAgent);
+workflow.addConditionalEdges("image", routeAfterAgent);
+workflow.addConditionalEdges("pdf", routeAfterAgent);
+workflow.addConditionalEdges("ppt", routeAfterAgent);
+workflow.addConditionalEdges("chat", routeAfterAgent);
+workflow.addConditionalEdges("vision", routeAfterAgent);
+workflow.addConditionalEdges("pdf_rag", routeAfterAgent);
+workflow.addConditionalEdges("data", routeAfterAgent);
+workflow.addConditionalEdges("github", routeAfterAgent);
 
-workflow.addEdge(
-  "pdf",
-  "__end__"
-);
-workflow.addEdge(
-  "ppt",
-  "__end__"
-);
+workflow.addConditionalEdges("search", (state) => {
+  if (state.isAutonomous) return "planner";
+  return "chat";
+});
 
-workflow.addEdge(
-  "chat",
-  "__end__"
-);
-
-workflow.addEdge(
-    "vision",
-    "__end__"
-);
-
-workflow.addEdge(
-    "pdf_rag",
-    "__end__"
-);
+workflow.addConditionalEdges("planner", (state) => {
+  if (state.agent === "done") return "__end__";
+  return "router"; // go back to router to invoke the chosen agent
+});
 
 export const graph =
 workflow.compile();

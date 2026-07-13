@@ -14,7 +14,9 @@ async(req,res,next)=>{
 
    conversationId,
 
-   agent
+   agent,
+
+   isAutonomous
 
 } = req.body;
 
@@ -51,24 +53,31 @@ await axios.post(`${process.env.CHAT_SERVICE}/save-message`,{
     "x-user-id"
    ],
    agent,
-   file:req.file
+   file:req.file,
+   githubToken: req.headers["x-github-token"],
+   isAutonomous: isAutonomous === "true"
 
   });
 
 
   console.log("after res",result)
 
+  let finalResponse = result.response;
+  if (isAutonomous && result.taskPlan) {
+    finalResponse = `**Autonomous Mode Steps Taken:**\n${result.taskPlan.join("\n")}\n\n---\n\n${result.response}`;
+  }
+
   await addMessage(
  conversationId,
  "assistant",
- result.response
+ finalResponse
 );
 await axios.post(
  `${process.env.CHAT_SERVICE}/save-message`,
  {
   conversationId,
   role:"assistant",
-  content:result.response,
+  content:finalResponse,
   images:result.images,
   artifacts:
   result.artifacts || []
@@ -80,7 +89,7 @@ await axios.post(
  success:true,
 
  answer:
- result.response,
+ finalResponse,
  images:result.images,
  artifacts:
  result.artifacts || []
