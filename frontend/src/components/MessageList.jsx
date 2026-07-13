@@ -2,9 +2,11 @@ import MessageBubble from "./MessageBubble";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getMessages } from "../features/message.api";
-import { setArtifacts, setMessages } from "../redux/message.slice";
+import { setArtifacts, setMessages, removeLastMessage } from "../redux/message.slice";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { ArrowDown } from "lucide-react";
+
 function NeuralPulse() {
   return (
     <div className="relative w-9 h-9 flex items-center justify-center shrink-0">
@@ -84,9 +86,30 @@ function GeneratingIndicator() {
 export default function MessageList() {
 
   const bottomRef = useRef(null);
+  const scrollContainerRef = useRef(null);
+  const [showScrollBtn, setShowScrollBtn] = useState(false);
   const { messages, isLoading } = useSelector(state => state.message);
   const { selectedConversation } = useSelector(state => state.conversation);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const sentinel = bottomRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowScrollBtn(!entry.isIntersecting);
+      },
+      { root: container, threshold: 0.1 }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [messages.length, isLoading]);
+
 useEffect(() => {
 
   requestAnimationFrame(() => {
@@ -129,8 +152,31 @@ if (latestArtifactMessage) {
     get();
   }, [selectedConversation?._id]);
 
+  const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  };
+
+  const lastAiIndex = (() => {
+    for (let i = messages.length - 1; i >= 0; i--) {
+      if (messages[i].role !== "user") return i;
+    }
+    return -1;
+  })();
+
+  const handleRegenerate = useCallback((idx) => {
+    dispatch(removeLastMessage());
+  }, [dispatch]);
+
+  const handleEdit = useCallback((content, idx) => {
+    window.dispatchEvent(new CustomEvent("editPrompt", { detail: { content, index: idx } }));
+  }, []);
+
+  const handleSuggestionClick = (s) => {
+    window.dispatchEvent(new CustomEvent("editPrompt", { detail: { content: s } }));
+  };
+
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-6 space-y-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div ref={scrollContainerRef} className="relative flex-1 overflow-y-auto px-6 py-6 space-y-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {messages.length === 0 && !isLoading ? (
         <div className="h-full flex flex-col items-center justify-center gap-4 text-center">
           <div className="flex flex-col gap-1.5">
@@ -142,6 +188,7 @@ if (latestArtifactMessage) {
             {["Write a Netflix clone", "Explain Redis", "Build a dashboard"].map((s) => (
               <button
                 key={s}
+                onClick={() => handleSuggestionClick(s)}
                 className="text-[12px] text-slate-400 bg-white/[0.04] border border-white/[0.07] px-3.5 py-1.5 rounded-lg hover:bg-white/[0.08] hover:text-slate-200 transition-colors duration-150 cursor-pointer"
               >
                 {s}
@@ -158,7 +205,15 @@ if (latestArtifactMessage) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.22, ease: "easeOut" }}
             >
-              <MessageBubble role={msg.role} content={msg.content} images={msg?.images || []}/>
+              <MessageBubble
+                role={msg.role}
+                content={msg.content}
+                images={msg?.images || []}
+                onRegenerate={handleRegenerate}
+                onEdit={handleEdit}
+                isLast={i === lastAiIndex}
+                index={i}
+              />
             </motion.div>
           ))}
 
@@ -175,6 +230,22 @@ if (latestArtifactMessage) {
         </>
       )}
         <div ref={bottomRef} />
+
+      <AnimatePresence>
+        {showScrollBtn && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.15 }}
+            onClick={scrollToBottom}
+            className="sticky bottom-4 left-1/2 -translate-x-1/2 z-10 p-2 rounded-full bg-white/10 border border-white/10 text-slate-300 hover:bg-white/20 hover:text-white backdrop-blur-sm shadow-lg transition-colors cursor-pointer"
+            title="Scroll to bottom"
+          >
+            <ArrowDown size={18} />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

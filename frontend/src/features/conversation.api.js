@@ -27,3 +27,24 @@ export const createConversation =async()=>{
  return response.data;
 
 };
+export const deleteConversation =async(conversationId)=>{
+
+ const response =await api.delete(`/api/chat/delete-conversation/${conversationId}`);
+
+ return response.data;
+
+};
+export const deleteAllConversations =async()=>{
+
+ const response =await api.delete("/api/chat/delete-all-conversations");
+
+ return response.data;
+
+};
+export const togglePinConversation =async(conversationId)=>{
+
+ const response =await api.post("/api/chat/toggle-pin",{ conversationId });
+
+ return response.data;
+
+};

@@ -4,40 +4,63 @@ import remarkGfm from "remark-gfm";
 import { FiExternalLink, FiX } from "react-icons/fi";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, RefreshCw, Pencil, Volume2, VolumeX } from "lucide-react";
 
-function MessageBubble({ role, content ,images}) {
+function MessageBubble({ role, content, images, onRegenerate, onEdit, isLast, index }) {
   const isUser = role === "user";
   const [lightboxSrc, setLightboxSrc] = useState(null);
-const [copiedCode, setCopiedCode] = useState("");
-const copyCode = async (code) => {
-  await navigator.clipboard.writeText(code);
+  const [copiedCode, setCopiedCode] = useState("");
+  const [copiedMessage, setCopiedMessage] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
-  setCopiedCode(code);
+  const copyCode = async (code) => {
+    await navigator.clipboard.writeText(code);
+    setCopiedCode(code);
+    setTimeout(() => {
+      setCopiedCode("");
+    }, 2000);
+  };
 
-  setTimeout(() => {
-    setCopiedCode("");
-  }, 2000);
-};
+  const copyMessage = async () => {
+    await navigator.clipboard.writeText(content);
+    setCopiedMessage(true);
+    setTimeout(() => {
+      setCopiedMessage(false);
+    }, 2000);
+  };
+
+  const toggleSpeech = () => {
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+    } else {
+      const utterance = new SpeechSynthesisUtterance(content);
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+      window.speechSynthesis.speak(utterance);
+      setIsSpeaking(true);
+    }
+  };
 
 const markdown = (content || "")
   .replace(/```review/gi, "```")
   .replace(/```text/gi, "```")
   .replace(/```[a-zA-Z0-9_-]+\s+id="[^"]*"/g, "```");
   return (
-    <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
-      <div
-        className={`w-fit max-w-[92vw] md:max-w-[72%]
+    <div className={`group/msg flex flex-col ${isUser ? "items-end" : "items-start"}`}>
+      <div className={`flex ${isUser ? "justify-end" : "justify-start"} w-full`}>
+        <div
+          className={`relative w-fit max-w-[92vw] md:max-w-[72%]
   px-4 py-2.5 rounded-2xl
   break-words overflow-hidden
   leading-relaxed
-        ${
-          isUser
-            ? "bg-gradient-to-br from-indigo-500 to-violet-700 text-white rounded-tr-sm"
-            : " text-slate-200 rounded-tl-sm"
-        }`}
-      >
-        {images.length > 0 && (
+          ${
+            isUser
+              ? "bg-gradient-to-br from-indigo-500 to-violet-700 text-white rounded-tr-sm"
+              : " text-slate-200 rounded-tl-sm"
+          }`}
+        >
+          {images.length > 0 && (
     <div className="flex flex-wrap gap-3 mt-4">
         {images.map((img, i) => (
             <img
@@ -196,7 +219,47 @@ const markdown = (content || "")
 >
   {markdown}
 </ReactMarkdown>
+
+          {isUser && (
+            <button
+              onClick={() => onEdit?.(content, index)}
+              className="absolute -left-8 top-1/2 -translate-y-1/2 opacity-0 group-hover/msg:opacity-100 transition-opacity text-slate-400 hover:text-slate-200 cursor-pointer"
+            >
+              <Pencil size={14} />
+            </button>
+          )}
+        </div>
       </div>
+
+      {!isUser && (
+        <div className="flex items-center gap-1 mt-1 ml-1">
+          <button
+            onClick={copyMessage}
+            className="p-1.5 rounded-md text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-colors cursor-pointer"
+            title="Copy message"
+          >
+            {copiedMessage ? <Check size={14} /> : <Copy size={14} />}
+          </button>
+
+          <button
+            onClick={toggleSpeech}
+            className="p-1.5 rounded-md text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-colors cursor-pointer"
+            title={isSpeaking ? "Stop speaking" : "Read aloud"}
+          >
+            {isSpeaking ? <VolumeX size={14} /> : <Volume2 size={14} />}
+          </button>
+
+          {isLast && (
+            <button
+              onClick={() => onRegenerate?.(index)}
+              className="p-1.5 rounded-md text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-colors cursor-pointer"
+              title="Regenerate response"
+            >
+              <RefreshCw size={14} />
+            </button>
+          )}
+        </div>
+      )}
 
       {lightboxSrc && (
         <div

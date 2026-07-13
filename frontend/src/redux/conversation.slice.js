@@ -55,13 +55,34 @@ setConvTitle:(state,action)=>{
 
  }
 
+},
+removeConversation:(state,action)=>{
+ const id = action.payload;
+ state.conversations = state.conversations.filter((conv)=>conv._id !== id);
+ if(state.selectedConversation?._id === id){
+  state.selectedConversation = null;
+ }
+},
+clearAllConversations:(state)=>{
+ state.conversations = [];
+ state.selectedConversation = null;
+},
+togglePinConversation:(state,action)=>{
+ const id = action.payload;
+ state.conversations = state.conversations.map((conv)=>
+  conv._id === id ? { ...conv, isPinned: !conv.isPinned } : conv
+ );
+ state.conversations.sort((a,b)=>{
+  if(a.isPinned && !b.isPinned) return -1;
+  if(!a.isPinned && b.isPinned) return 1;
+  return new Date(b.updatedAt) - new Date(a.updatedAt);
+ });
 }
-
  
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {setConversations,addConversation,setSelectedConversation,setConvTitle} = conversationSlice.actions
+export const {setConversations,addConversation,setSelectedConversation,setConvTitle,removeConversation,clearAllConversations,togglePinConversation} = conversationSlice.actions
 
 export default conversationSlice.reducer

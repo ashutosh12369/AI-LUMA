@@ -1,23 +1,26 @@
-import { useEffect, useState } from "react";
-import { Plus, MessageSquare, Settings, LogOut, User, PenSquare, Menu, X, Coins, ConeIcon, CoinsIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Plus, MessageSquare, Settings, LogOut, User, PenSquare, Menu, X, Coins, ConeIcon, CoinsIcon, Pencil, Trash2, Pin } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../utils/axios";
 import { setUserData } from "../redux/user.slice";
-import { createConversation, getConversations } from "../features/conversation.api";
-import { addConversation, setConversations, setSelectedConversation } from "../redux/conversation.slice";
+import { createConversation, getConversations, updateConversations, deleteConversation, deleteAllConversations, togglePinConversation as togglePinApi } from "../features/conversation.api";
+import { addConversation, setConversations, setSelectedConversation, setConvTitle, removeConversation, clearAllConversations, togglePinConversation } from "../redux/conversation.slice";
 import { getMessages } from "../features/message.api";
 import { setArtifacts, setMessages } from "../redux/message.slice";
-  import BillingDrawer from "./BillingDrawer";
+import BillingDrawer from "./BillingDrawer";
 
 export default function Sidebar() {
   const [hovered, setHovered]     = useState(null);
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
- const [imageError,setImageError]=useState(false)
+  const [imageError, setImageError] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [editValue, setEditValue] = useState("");
+  const editRef = useRef(null);
   const { userData } = useSelector(state => state.user);
   const { conversations, selectedConversation } = useSelector(state => state.conversation);
   const dispatch = useDispatch();
-const [showBilling, setShowBilling] =useState(false);
+  const [showBilling, setShowBilling] = useState(false);
   const logout = async () => {
     try {
       await api.get("/api/auth/logout");
@@ -51,7 +54,63 @@ const [showBilling, setShowBilling] =useState(false);
     dispatch(setSelectedConversation(conversation));
     const messages = await getMessages(conversation._id);
     dispatch(setMessages(messages));
-     dispatch(setArtifacts(messages.artifacts));
+    dispatch(setArtifacts(messages.artifacts));
+  };
+
+  const startRename = (e, chat) => {
+    e.stopPropagation();
+    setEditingId(chat._id);
+    setEditValue(chat.title);
+    setTimeout(() => editRef.current?.focus(), 0);
+  };
+
+  const commitRename = async (chatId) => {
+    const trimmed = editValue.trim();
+    if (trimmed && trimmed !== conversations.find(c => c._id === chatId)?.title) {
+      try {
+        await updateConversations(chatId, trimmed);
+        dispatch(setConvTitle({ conversationId: chatId, title: trimmed }));
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    setEditingId(null);
+  };
+
+  const handleDelete = async (e, chatId) => {
+    e.stopPropagation();
+    try {
+      await deleteConversation(chatId);
+      dispatch(removeConversation(chatId));
+      if (selectedConversation?._id === chatId) {
+        dispatch(setMessages([]));
+        dispatch(setArtifacts([]));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handlePin = async (e, chatId) => {
+    e.stopPropagation();
+    try {
+      await togglePinApi(chatId);
+      dispatch(togglePinConversation(chatId));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleClearAll = async () => {
+    if (!window.confirm("Delete all conversations? This cannot be undone.")) return;
+    try {
+      await deleteAllConversations();
+      dispatch(clearAllConversations());
+      dispatch(setMessages([]));
+      dispatch(setArtifacts([]));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const PanelIcon = () => (
@@ -156,19 +215,24 @@ const [showBilling, setShowBilling] =useState(false);
       </div>
 
       {
-        conversations.length==0? (
-        
+        conversations.length === 0 ? (
             <div className="px-5 pt-4 pb-1.5 text-[10.5px] font-semibold uppercase tracking-widest text-slate-600">
                  No recent conversations
             </div>
           )
-        :
-        (
-             
- <p className="px-5 pt-4 pb-1.5 text-[10.5px] font-semibold uppercase tracking-widest text-slate-600">
-        Recents
-      </p>
-
+        : (
+          <div className="flex items-center justify-between px-5 pt-4 pb-1.5">
+            <p className="text-[10.5px] font-semibold uppercase tracking-widest text-slate-600">
+              Recents
+            </p>
+            <button
+              onClick={handleClearAll}
+              title="Clear all chats"
+              className="flex items-center justify-center w-5 h-5 rounded text-slate-600 hover:text-red-400 hover:bg-white/[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer"
+            >
+              <Trash2 size={11} />
+            </button>
+          </div>
         )
       }
 
@@ -177,12 +241,13 @@ const [showBilling, setShowBilling] =useState(false);
       {/* Chat list */}
       <div className="flex-1 overflow-y-auto px-2.5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {conversations.map((chat) => {
-          const isActive = selectedConversation?._id === chat._id;
-          const isHov    = hovered === chat._id;
+          const isActive  = selectedConversation?._id === chat._id;
+          const isHov     = hovered === chat._id;
+          const isEditing = editingId === chat._id;
           return (
             <div
               key={chat._id}
-              onClick={() => handleSelectConversation(chat)}
+              onClick={() => !isEditing && handleSelectConversation(chat)}
               onMouseEnter={() => setHovered(chat._id)}
               onMouseLeave={() => setHovered(null)}
               className={`flex items-center gap-2.5 cursor-pointer mb-0.5 px-3 py-2.5 rounded-[10px] border transition-colors duration-150
@@ -194,9 +259,56 @@ const [showBilling, setShowBilling] =useState(false);
                 ${isActive ? "bg-indigo-500/15 text-indigo-400" : "bg-white/[0.05] text-slate-500"}`}>
                 <MessageSquare size={13} />
               </div>
-              <p className={`text-[13px] font-medium truncate ${isActive ? "text-slate-100" : "text-slate-300"}`}>
-                {chat.title}
-              </p>
+
+              {isEditing ? (
+                <input
+                  ref={editRef}
+                  value={editValue}
+                  onChange={(e) => setEditValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") commitRename(chat._id);
+                    if (e.key === "Escape") setEditingId(null);
+                  }}
+                  onBlur={() => commitRename(chat._id)}
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex-1 min-w-0 text-[13px] font-medium text-slate-100 bg-white/[0.06] border border-white/[0.1] rounded-md px-2 py-0.5 outline-none focus:border-indigo-500/50"
+                />
+              ) : (
+                <p className={`flex-1 min-w-0 text-[13px] font-medium truncate ${isActive ? "text-slate-100" : "text-slate-300"}`}>
+                  {chat.title}
+                </p>
+              )}
+
+              {!isEditing && (isHov || chat.isPinned) && (
+                <div className="flex items-center gap-0.5 shrink-0">
+                  <button
+                    onClick={(e) => handlePin(e, chat._id)}
+                    title={chat.isPinned ? "Unpin" : "Pin"}
+                    className={`flex items-center justify-center w-5 h-5 rounded transition-colors duration-150 bg-transparent border-none cursor-pointer
+                      ${chat.isPinned ? "text-indigo-400" : "text-slate-500 hover:text-slate-200"}`}
+                  >
+                    <Pin size={13} />
+                  </button>
+                  {isHov && (
+                    <>
+                      <button
+                        onClick={(e) => startRename(e, chat)}
+                        title="Rename"
+                        className="flex items-center justify-center w-5 h-5 rounded text-slate-500 hover:text-slate-200 transition-colors duration-150 bg-transparent border-none cursor-pointer"
+                      >
+                        <Pencil size={13} />
+                      </button>
+                      <button
+                        onClick={(e) => handleDelete(e, chat._id)}
+                        title="Delete"
+                        className="flex items-center justify-center w-5 h-5 rounded text-slate-500 hover:text-red-400 transition-colors duration-150 bg-transparent border-none cursor-pointer"
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           );
         })}

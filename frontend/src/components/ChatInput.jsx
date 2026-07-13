@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Send, Paperclip,  Square, Zap, MessageSquare, Code2, Presentation, Image as ImageIcon, Globe, FileText,X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage, setArtifacts, setIsLoading } from "../redux/message.slice";
 import { sendPrompt } from "../features/agent.api";
 import { Mic, MicOff } from "lucide-react";
 import { useEffect } from "react";
+import { removeLastMessage } from "../redux/message.slice";
 import { createConversation, updateConversations } from "../features/conversation.api";
 import { addConversation, setConvTitle, setSelectedConversation } from "../redux/conversation.slice";
 import { useRef } from "react";
@@ -93,6 +94,18 @@ search:"Search the web..."
   }
 
 ];
+
+useEffect(() => {
+  const handleEditPrompt = (e) => {
+    const { content, index } = e.detail;
+    setValue(content);
+    if (index !== undefined) {
+      dispatch(removeLastMessage());
+    }
+  };
+  window.addEventListener('editPrompt', handleEditPrompt);
+  return () => window.removeEventListener('editPrompt', handleEditPrompt);
+}, [dispatch]);
 
 useEffect(() => {
 

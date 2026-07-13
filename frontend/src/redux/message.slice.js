@@ -29,12 +29,19 @@ export const messageSlice = createSlice({
   },
   setArtifacts: (state, action) => {
   state.artifacts = action.payload;
+},
+  updateMessage:(state,action)=>{
+ const { index, message } = action.payload;
+ state.messages[index] = message;
+},
+  removeLastMessage:(state)=>{
+ state.messages.pop();
 }
  
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {setMessages,addMessage,setIsLoading,setArtifacts} = messageSlice.actions
+export const {setMessages,addMessage,setIsLoading,setArtifacts,updateMessage,removeLastMessage} = messageSlice.actions
 
 export default messageSlice.reducer
