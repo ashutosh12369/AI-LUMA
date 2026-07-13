@@ -159,9 +159,13 @@ export const verifyPayment = async (req, res) => {
 
         await payment.save();
 
+        const authServiceUrl = process.env.AUTH_SERVICE_HOSTPORT 
+            ? `http://${process.env.AUTH_SERVICE_HOSTPORT}` 
+            : process.env.AUTH_SERVICE;
+
         await axios.patch(
 
-    `${process.env.AUTH_SERVICE}/internal/update-plan`,
+    `${authServiceUrl}/internal/update-plan`,
 
     {
 

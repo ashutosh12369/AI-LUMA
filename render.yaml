@@ -39,6 +39,8 @@ services:
     buildCommand: npm install
     startCommand: npm start
     envVars:
+      - key: MONGO_URI
+        sync: false
       - key: REDIS_URL
         sync: false
       - key: GOOGLE_API_KEY
@@ -56,6 +58,15 @@ services:
     envVars:
       - key: MONGO_URI
         sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: AUTH_SERVICE_HOSTPORT
+        fromService:
+          name: ailuma-auth-service
+          type: web
+          property: hostport
 
   - type: web
     name: ailuma-gateway
