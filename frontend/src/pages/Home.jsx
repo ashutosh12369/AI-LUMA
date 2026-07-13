@@ -17,6 +17,7 @@ const login=async (token)=>{
     dispatch(setUserData(data.user))
   } catch (error) {
     console.log(error)
+    alert("Backend Login Error: " + (error.response?.data?.message || error.message));
   }
 }
   const handleGoogleLogin =async () => {
@@ -44,6 +45,7 @@ const login=async (token)=>{
       await login(token);
     } catch (error) {
       console.error("GitHub login error:", error);
+      alert("Login Error: " + error.message);
     }
   };
 
