@@ -1,6 +1,7 @@
 services:
   - type: web
     name: ailuma-auth-service
+    plan: free
     env: node
     rootDir: backend/services/auth
     buildCommand: npm install
@@ -19,6 +20,7 @@ services:
 
   - type: web
     name: ailuma-chat-service
+    plan: free
     env: node
     rootDir: backend/services/chat
     buildCommand: npm install
@@ -31,6 +33,7 @@ services:
 
   - type: web
     name: ailuma-agent-service
+    plan: free
     env: node
     rootDir: backend/services/agent
     buildCommand: npm install
@@ -45,6 +48,7 @@ services:
 
   - type: web
     name: ailuma-billing-service
+    plan: free
     env: node
     rootDir: backend/services/billing
     buildCommand: npm install
@@ -55,6 +59,7 @@ services:
 
   - type: web
     name: ailuma-gateway
+    plan: free
     env: node
     rootDir: backend/gateway
     buildCommand: npm install
