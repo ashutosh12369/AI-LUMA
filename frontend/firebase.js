@@ -6,7 +6,7 @@ import { getAuth, GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAeFDe53e-GKN8RH3bhwPqAqkiq-yOTqK8",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "ai-luma.firebaseapp.com",
   projectId: "ai-luma",
   storageBucket: "ai-luma.firebasestorage.app",
