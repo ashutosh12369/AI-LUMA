@@ -1,6 +1,12 @@
 import { initializeApp, cert } from "firebase-admin/app";
+import dotenv from "dotenv";
+dotenv.config();
 
-import serviceAccount from "../serviceAccount.json" with { type: "json" };
+const serviceAccount = {
+  project_id: process.env.FIREBASE_PROJECT_ID,
+  private_key: process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n') : undefined,
+  client_email: process.env.FIREBASE_CLIENT_EMAIL,
+};
 
 export const app = initializeApp({
   credential: cert(serviceAccount),
