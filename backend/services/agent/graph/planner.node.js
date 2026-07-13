@@ -29,7 +29,7 @@ chat, search, coding, pdf, data, github.
   const decision = result.content.trim().toLowerCase();
 
   const newPlan = state.taskPlan ? [...state.taskPlan] : [];
-  newPlan.push(\`[Step] Used agent, got response length: \${state.response?.length || 0}\`);
+  newPlan.push(`[Step] Used agent, got response length: ${state.response?.length || 0}`);
 
   if (decision === "done") {
     return {

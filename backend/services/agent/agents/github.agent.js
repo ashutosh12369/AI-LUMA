@@ -75,8 +75,8 @@ Based on the user's prompt, choose the best action. Return JSON only.
 
     if (parsed.action === "list_repos") {
       const { data: repos } = await octokit.rest.repos.listForAuthenticatedUser({ sort: "updated", per_page: 10 });
-      const repoList = repos.map(r => \`- \${r.name} (\${r.private ? "Private" : "Public"})\`).join("\\n");
-      return { ...state, response: \`Here are your recently updated repositories:\\n\\n\${repoList}\` };
+      const repoList = repos.map(r => `- ${r.name} (${r.private ? "Private" : "Public"})`).join("\\n");
+      return { ...state, response: `Here are your recently updated repositories:\\n\\n${repoList}` };
     }
 
     if (parsed.action === "read_file") {
@@ -87,9 +87,9 @@ Based on the user's prompt, choose the best action. Return JSON only.
           path: parsed.path,
         });
         const content = Buffer.from(data.content, "base64").toString("utf-8");
-        return { ...state, response: \`**Contents of \${parsed.path} in \${parsed.repo}:**\\n\\n\`\`\`\\n\${content}\\n\`\`\`\` };
+        return { ...state, response: `**Contents of ${parsed.path} in ${parsed.repo}:**\\n\\n\`\`\`\\n${content}\\n\`\`\`` };
       } catch (e) {
-        return { ...state, response: \`❌ Failed to read file \${parsed.path} in repo \${parsed.repo}. Make sure the file exists and the repo is correct.\` };
+        return { ...state, response: `❌ Failed to read file ${parsed.path} in repo ${parsed.repo}. Make sure the file exists and the repo is correct.` };
       }
     }
 
@@ -112,13 +112,13 @@ Based on the user's prompt, choose the best action. Return JSON only.
           owner: username,
           repo: parsed.repo,
           path: parsed.path,
-          message: parsed.message || \`Update \${parsed.path}\`,
+          message: parsed.message || `Update ${parsed.path}`,
           content: Buffer.from(parsed.content).toString("base64"),
           sha
         });
-        return { ...state, response: \`✅ Successfully committed changes to \`${parsed.path}\` in repository \`${parsed.repo}\`!\` };
+        return { ...state, response: `✅ Successfully committed changes to \`${parsed.path}\` in repository \`${parsed.repo}\`!` };
       } catch (e) {
-        return { ...state, response: \`❌ Failed to commit to \${parsed.repo}. Error: \${e.message}\` };
+        return { ...state, response: `❌ Failed to commit to ${parsed.repo}. Error: ${e.message}` };
       }
     }
 
