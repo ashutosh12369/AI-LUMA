@@ -26,9 +26,13 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 const getServiceUrl = (serviceName) => {
-  const hostport = process.env[`${serviceName}_HOSTPORT`];
-  if (hostport) return `http://${hostport}`;
-  return process.env[serviceName];
+  const nameMap = {
+    "AUTH_SERVICE": "https://ailuma-auth-service.onrender.com",
+    "CHAT_SERVICE": "https://ailuma-chat-service.onrender.com",
+    "AGENT_SERVICE": "https://ailuma-agent-service.onrender.com",
+    "BILLING_SERVICE": "https://ailuma-billing-service.onrender.com",
+  };
+  return nameMap[serviceName] || process.env[serviceName];
 };
 
 app.use("/api/auth",proxy(getServiceUrl("AUTH_SERVICE")))

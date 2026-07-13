@@ -29,7 +29,7 @@ await addMessage(
  prompt
 );
 
-await axios.post(`${process.env.CHAT_SERVICE}/save-message`,{
+await axios.post(`https://ailuma-chat-service.onrender.com/save-message`,{
   conversationId,
   role:"user",
   content:prompt
@@ -73,7 +73,7 @@ await axios.post(`${process.env.CHAT_SERVICE}/save-message`,{
  finalResponse
 );
 await axios.post(
- `${process.env.CHAT_SERVICE}/save-message`,
+ `${"https://ailuma-chat-service.onrender.com"}/save-message`,
  {
   conversationId,
   role:"assistant",

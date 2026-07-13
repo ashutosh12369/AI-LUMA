@@ -159,9 +159,7 @@ export const verifyPayment = async (req, res) => {
 
         await payment.save();
 
-        const authServiceUrl = process.env.AUTH_SERVICE_HOSTPORT 
-            ? `http://${process.env.AUTH_SERVICE_HOSTPORT}` 
-            : process.env.AUTH_SERVICE;
+        const authServiceUrl = "https://ailuma-auth-service.onrender.com";
 
         await axios.patch(
 
