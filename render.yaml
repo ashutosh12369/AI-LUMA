@@ -1,0 +1,86 @@
+services:
+  - type: web
+    name: ailuma-auth-service
+    env: node
+    rootDir: backend/services/auth
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_PRIVATE_KEY
+        sync: false
+      - key: FIREBASE_CLIENT_EMAIL
+        sync: false
+
+  - type: web
+    name: ailuma-chat-service
+    env: node
+    rootDir: backend/services/chat
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: REDIS_URL
+        sync: false
+
+  - type: web
+    name: ailuma-agent-service
+    env: node
+    rootDir: backend/services/agent
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: REDIS_URL
+        sync: false
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+
+  - type: web
+    name: ailuma-billing-service
+    env: node
+    rootDir: backend/services/billing
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        sync: false
+
+  - type: web
+    name: ailuma-gateway
+    env: node
+    rootDir: backend/gateway
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: REDIS_URL
+        sync: false
+      - key: CLIENT_URL
+        sync: false
+      - key: AUTH_SERVICE
+        fromService:
+          name: ailuma-auth-service
+          type: web
+          property: url
+      - key: CHAT_SERVICE
+        fromService:
+          name: ailuma-chat-service
+          type: web
+          property: url
+      - key: AGENT_SERVICE
+        fromService:
+          name: ailuma-agent-service
+          type: web
+          property: url
+      - key: BILLING_SERVICE
+        fromService:
+          name: ailuma-billing-service
+          type: web
+          property: url

@@ -12,9 +12,10 @@ import cookieParser from "cookie-parser"
 dotenv.config();
 const app = express();
 const port=process.env.PORT || 5000
+const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
 app.use(cors({
-    origin:"http://localhost:5173",
-    credentials:true
+    origin: [clientUrl, "http://localhost:5173"],
+    credentials: true
 }));
 app.use(
   "/uploads",
