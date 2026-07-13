@@ -4,7 +4,7 @@ services:
     plan: free
     env: node
     rootDir: backend/services/auth
-    buildCommand: npm install --prefix ../shared && npm install
+    buildCommand: npm install --prefix ../../shared && npm install
     startCommand: npm start
     envVars:
       - key: MONGO_URI
@@ -23,7 +23,7 @@ services:
     plan: free
     env: node
     rootDir: backend/services/chat
-    buildCommand: npm install --prefix ../shared && npm install
+    buildCommand: npm install --prefix ../../shared && npm install
     startCommand: npm start
     envVars:
       - key: MONGO_URI
@@ -36,7 +36,7 @@ services:
     plan: free
     env: node
     rootDir: backend/services/agent
-    buildCommand: npm install --prefix ../shared && npm install
+    buildCommand: npm install --prefix ../../shared && npm install
     startCommand: npm start
     envVars:
       - key: MONGO_URI
@@ -53,7 +53,7 @@ services:
     plan: free
     env: node
     rootDir: backend/services/billing
-    buildCommand: npm install --prefix ../shared && npm install
+    buildCommand: npm install --prefix ../../shared && npm install
     startCommand: npm start
     envVars:
       - key: MONGO_URI
