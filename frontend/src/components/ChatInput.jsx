@@ -313,7 +313,10 @@ catch(error){
       Auto
     </button>
 
-    {agents.map((agent) => {
+    {(() => {
+      const hasGithubToken = !!localStorage.getItem("github_token");
+      const filteredAgents = agents.filter(a => a.id !== "github" || hasGithubToken);
+      return filteredAgents.map((agent) => {
 
       const Icon = agent.icon;
       const isActive = selectedAgent === agent.id;
@@ -360,7 +363,7 @@ catch(error){
 
       );
 
-    })}
+    })})()}
 
 
 </div>
