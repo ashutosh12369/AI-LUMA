@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Plus, MessageSquare, Settings, LogOut, User, PenSquare, Menu, X, Coins, ConeIcon, CoinsIcon, Pencil, Trash2, Pin } from "lucide-react";
+import { Plus, MessageSquare, Settings, LogOut, User, PenSquare, Menu, X, Coins, ConeIcon, CoinsIcon, Pencil, Trash2, Pin, FolderOpen, FolderPlus, ChevronDown, ChevronRight } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../utils/axios";
 import { setUserData } from "../redux/user.slice";
-import { createConversation, getConversations, updateConversations, deleteConversation, deleteAllConversations, togglePinConversation as togglePinApi } from "../features/conversation.api";
-import { addConversation, setConversations, setSelectedConversation, setConvTitle, removeConversation, clearAllConversations, togglePinConversation } from "../redux/conversation.slice";
+import { createConversation, getConversations, updateConversations, deleteConversation, deleteAllConversations, togglePinConversation as togglePinApi, moveToFolder } from "../features/conversation.api";
+import { addConversation, setConversations, setSelectedConversation, setConvTitle, removeConversation, clearAllConversations, togglePinConversation, moveConvToFolder } from "../redux/conversation.slice";
 import { getMessages } from "../features/message.api";
 import { setArtifacts, setMessages } from "../redux/message.slice";
 import BillingDrawer from "./BillingDrawer";
@@ -16,6 +16,7 @@ export default function Sidebar() {
   const [imageError, setImageError] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState("");
+  const [openFolders, setOpenFolders] = useState({});
   const editRef = useRef(null);
   const { userData } = useSelector(state => state.user);
   const { conversations, selectedConversation } = useSelector(state => state.conversation);
@@ -102,17 +103,43 @@ export default function Sidebar() {
   };
 
   const handleClearAll = async () => {
-    if (!window.confirm("Delete all conversations? This cannot be undone.")) return;
-    try {
-      await deleteAllConversations();
-      dispatch(clearAllConversations());
-      dispatch(setMessages([]));
-      dispatch(setArtifacts([]));
-    } catch (err) {
-      console.log(err);
+    if (window.confirm("Are you sure you want to delete all conversations? This cannot be undone.")) {
+      try {
+        await deleteAllConversations();
+        dispatch(clearAllConversations());
+        dispatch(setMessages([]));
+        dispatch(setArtifacts([]));
+      } catch (error) {
+        console.error("Failed to delete all chats", error);
+      }
     }
   };
 
+  const handleMoveToFolder = async (e, chatId) => {
+    e.stopPropagation();
+    const folderName = window.prompt("Enter folder name (leave empty to remove from folder):");
+    if (folderName !== null) {
+      try {
+        await moveToFolder(chatId, folderName.trim());
+        dispatch(moveConvToFolder({ conversationId: chatId, folder: folderName.trim() }));
+      } catch (error) {
+        console.error("Failed to move chat", error);
+      }
+    }
+  };
+
+  // Group conversations by folder
+  const groupedConversations = conversations.reduce((acc, chat) => {
+    const folder = chat.folder || "";
+    if (!acc[folder]) acc[folder] = [];
+    acc[folder].push(chat);
+    return acc;
+  }, {});
+  
+  const folders = Object.keys(groupedConversations).filter(f => f !== "");
+  const uncategorized = groupedConversations[""] || [];
+
+  /* ── Desktop Expanded Rail ── */
   const PanelIcon = () => (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/>
@@ -239,58 +266,16 @@ export default function Sidebar() {
       {/* Section label */}
      
       {/* Chat list */}
-      <div className="flex-1 overflow-y-auto px-2.5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {conversations.map((chat) => {
-          const isActive  = selectedConversation?._id === chat._id;
-          const isHov     = hovered === chat._id;
-          const isEditing = editingId === chat._id;
-          return (
-            <div
-              key={chat._id}
-              onClick={() => !isEditing && handleSelectConversation(chat)}
-              onMouseEnter={() => setHovered(chat._id)}
-              onMouseLeave={() => setHovered(null)}
-              className={`flex items-center gap-2.5 cursor-pointer mb-0.5 px-3 py-2.5 rounded-[10px] border transition-colors duration-150
-                ${isActive ? "bg-indigo-500/10 border-indigo-500/[0.18]"
-                : isHov   ? "bg-white/[0.05] border-transparent"
-                :            "bg-transparent border-transparent"}`}
-            >
-              <div className={`flex items-center justify-center shrink-0 w-[28px] h-[28px] rounded-lg transition-colors duration-150
-                ${isActive ? "bg-indigo-500/15 text-indigo-400" : "bg-white/[0.05] text-slate-500"}`}>
-                <MessageSquare size={13} />
-              </div>
-
-              {isEditing ? (
-                <input
-                  ref={editRef}
-                  value={editValue}
-                  onChange={(e) => setEditValue(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") commitRename(chat._id);
-                    if (e.key === "Escape") setEditingId(null);
-                  }}
-                  onBlur={() => commitRename(chat._id)}
-                  onClick={(e) => e.stopPropagation()}
-                  className="flex-1 min-w-0 text-[13px] font-medium text-slate-100 bg-white/[0.06] border border-white/[0.1] rounded-md px-2 py-0.5 outline-none focus:border-indigo-500/50"
-                />
-              ) : (
-                <p className={`flex-1 min-w-0 text-[13px] font-medium truncate ${isActive ? "text-slate-100" : "text-slate-300"}`}>
-                  {chat.title}
-                </p>
-              )}
-
-              {!isEditing && (isHov || chat.isPinned) && (
-                <div className="flex items-center gap-0.5 shrink-0">
-                  <button
-                    onClick={(e) => handlePin(e, chat._id)}
-                    title={chat.isPinned ? "Unpin" : "Pin"}
-                    className={`flex items-center justify-center w-5 h-5 rounded transition-colors duration-150 bg-transparent border-none cursor-pointer
-                      ${chat.isPinned ? "text-indigo-400" : "text-slate-500 hover:text-slate-200"}`}
-                  >
-                    <Pin size={13} />
                   </button>
                   {isHov && (
                     <>
+                      <button
+                        onClick={(e) => handleMoveToFolder(e, chat._id)}
+                        title="Move to Folder"
+                        className="flex items-center justify-center w-5 h-5 rounded text-slate-500 hover:text-slate-200 transition-colors duration-150 bg-transparent border-none cursor-pointer"
+                      >
+                        <FolderPlus size={13} />
+                      </button>
                       <button
                         onClick={(e) => startRename(e, chat)}
                         title="Rename"
@@ -311,8 +296,34 @@ export default function Sidebar() {
               )}
             </div>
           );
-        })}
-      </div>
+        };
+
+        return (
+          <div className="flex-1 overflow-y-auto px-2.5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {folders.map(folder => (
+              <div key={folder} className="mb-2">
+                <div 
+                  className="flex items-center gap-2 px-2 py-1.5 cursor-pointer text-slate-400 hover:text-slate-200 transition-colors"
+                  onClick={() => setOpenFolders(prev => ({ ...prev, [folder]: !prev[folder] }))}
+                >
+                  {openFolders[folder] === false ? <ChevronRight size={14} /> : <ChevronDown size={14} />}
+                  <FolderOpen size={13} />
+                  <span className="text-xs font-semibold uppercase tracking-wider">{folder}</span>
+                </div>
+                {openFolders[folder] !== false && (
+                  <div className="pl-2 border-l border-white/[0.06] ml-4 mt-1 space-y-0.5">
+                    {groupedConversations[folder].map(renderChatItem)}
+                  </div>
+                )}
+              </div>
+            ))}
+            
+            <div className="mt-2">
+              {uncategorized.map(renderChatItem)}
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Divider */}
       <div className="mx-2.5 h-px bg-white/[0.06]" />

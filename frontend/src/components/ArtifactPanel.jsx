@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import Editor from "@monaco-editor/react";
 import { FiCode } from "react-icons/fi";
 import { detectLanguage } from "../utils/detectLanguage";
-import { Code2, Eye, PanelRightClose, PanelRightOpen, X, Copy, Check } from "lucide-react";
+import { Code2, Eye, PanelRightClose, PanelRightOpen, X, Copy, Check, Share2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { shareArtifact } from "../features/conversation.api";
 
 export default function ArtifactPanel() {
   const [tab, setTab]               = useState("code");
@@ -12,6 +13,7 @@ export default function ArtifactPanel() {
   const [collapsed, setCollapsed]   = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [copied, setCopied]         = useState(false);
+  const [shared, setShared]         = useState(false);
 
   const { artifacts } = useSelector(state => state.message);
   const artifact = artifacts?.[0];
@@ -43,6 +45,18 @@ ${htmlFile?.content || ""}
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleShare = async () => {
+    try {
+      const data = await shareArtifact({ title: artifact.title, type: artifact.type, files: artifact.files });
+      const url = `${window.location.origin}/shared/${data.shareId}`;
+      await navigator.clipboard.writeText(url);
+      setShared(true);
+      setTimeout(() => setShared(false), 2000);
+    } catch (error) {
+      console.error("Failed to share artifact", error);
+    }
+  };
+
 
 
   /* ── Shared code panel content ── */
@@ -66,6 +80,13 @@ ${htmlFile?.content || ""}
         </div>
 
         <div className="flex items-center gap-1 shrink-0">
+          <button
+            onClick={handleShare}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium text-slate-400 hover:text-slate-200 hover:bg-white/[0.05] rounded-lg transition-colors duration-150 bg-transparent border-none cursor-pointer"
+          >
+            {shared ? <Check size={12} className="text-green-400" /> : <Share2 size={12} />}
+            {shared ? "Link Copied!" : "Share"}
+          </button>
           {/* Copy button — only in code tab */}
           {tab === "code" && (
             <button

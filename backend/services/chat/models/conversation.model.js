@@ -11,6 +11,10 @@ const conversationSchema =new mongoose.Schema({
   type:String,
   default:"New Chat"
  },
+ folder: {
+  type: String,
+  default: ""
+ },
 
  isPinned:{
   type:Boolean,

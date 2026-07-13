@@ -47,4 +47,14 @@ export const togglePinConversation =async(conversationId)=>{
 
  return response.data;
 
+};
+
+export const shareArtifact = async (artifact) => {
+  const response = await api.post("/api/chat/share-artifact", artifact);
+  return response.data;
+};
+
+export const moveToFolder = async (conversationId, folder) => {
+  const response = await api.post("/api/chat/move-to-folder", { conversationId, folder });
+  return response.data;
 };

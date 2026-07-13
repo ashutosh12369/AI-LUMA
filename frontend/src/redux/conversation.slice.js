@@ -77,12 +77,18 @@ togglePinConversation:(state,action)=>{
   if(!a.isPinned && b.isPinned) return 1;
   return new Date(b.updatedAt) - new Date(a.updatedAt);
  });
+},
+moveConvToFolder: (state, action) => {
+ const { conversationId, folder } = action.payload;
+ state.conversations = state.conversations.map((conv) =>
+  conv._id === conversationId ? { ...conv, folder } : conv
+ );
 }
  
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {setConversations,addConversation,setSelectedConversation,setConvTitle,removeConversation,clearAllConversations,togglePinConversation} = conversationSlice.actions
+export const {setConversations,addConversation,setSelectedConversation,setConvTitle,removeConversation,clearAllConversations,togglePinConversation,moveConvToFolder} = conversationSlice.actions
 
 export default conversationSlice.reducer

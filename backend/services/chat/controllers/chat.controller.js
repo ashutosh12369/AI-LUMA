@@ -1,5 +1,7 @@
 import Conversation
 from "../models/conversation.model.js";
+import SharedArtifact from "../models/sharedArtifact.model.js";
+import crypto from "crypto";
 
 export const createConversation =async(req,res)=>{
 
@@ -144,6 +146,34 @@ try {
 }
 }
 
+export const shareArtifact = async (req, res) => {
+  try {
+    const userId = req.headers["x-user-id"];
+    const { title, type, files } = req.body;
+    const shareId = crypto.randomBytes(8).toString("hex");
+    const shared = await SharedArtifact.create({
+      shareId,
+      title,
+      type,
+      files,
+      createdBy: userId
+    });
+    res.json({ shareId: shared.shareId });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getSharedArtifact = async (req, res) => {
+  try {
+    const shared = await SharedArtifact.findOne({ shareId: req.params.shareId });
+    if (!shared) return res.status(404).json({ message: "Artifact not found" });
+    res.json(shared);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const deleteConversation =async(req,res)=>{
 
  try{
@@ -210,3 +240,17 @@ export const togglePin =async(req,res)=>{
  }
 
 }
+
+export const moveToFolder = async (req, res) => {
+  try {
+    const { conversationId, folder } = req.body;
+    const conversation = await Conversation.findByIdAndUpdate(
+      conversationId,
+      { folder },
+      { new: true }
+    );
+    res.json(conversation);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
