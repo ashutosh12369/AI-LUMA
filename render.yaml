@@ -64,23 +64,23 @@ services:
         sync: false
       - key: CLIENT_URL
         sync: false
-      - key: AUTH_SERVICE
+      - key: AUTH_SERVICE_HOSTPORT
         fromService:
           name: ailuma-auth-service
           type: web
-          property: url
-      - key: CHAT_SERVICE
+          property: hostport
+      - key: CHAT_SERVICE_HOSTPORT
         fromService:
           name: ailuma-chat-service
           type: web
-          property: url
-      - key: AGENT_SERVICE
+          property: hostport
+      - key: AGENT_SERVICE_HOSTPORT
         fromService:
           name: ailuma-agent-service
           type: web
-          property: url
-      - key: BILLING_SERVICE
+          property: hostport
+      - key: BILLING_SERVICE_HOSTPORT
         fromService:
           name: ailuma-billing-service
           type: web
-          property: url
+          property: hostport

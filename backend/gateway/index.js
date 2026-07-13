@@ -25,12 +25,18 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
-app.use("/api/auth",proxy(process.env.AUTH_SERVICE))
+const getServiceUrl = (serviceName) => {
+  const hostport = process.env[`${serviceName}_HOSTPORT`];
+  if (hostport) return `http://${hostport}`;
+  return process.env[serviceName];
+};
+
+app.use("/api/auth",proxy(getServiceUrl("AUTH_SERVICE")))
 app.use("/api/me",protect,getCurrentUser)
-app.use("/api/chat/shared", proxy(process.env.CHAT_SERVICE))
-app.use("/api/chat",protect,proxyWithUser(process.env.CHAT_SERVICE))
-app.use("/api/agent",protect,proxyWithUser(process.env.AGENT_SERVICE))
-app.use("/api/billing",protect,proxyWithUser(process.env.BILLING_SERVICE))
+app.use("/api/chat/shared", proxy(getServiceUrl("CHAT_SERVICE")))
+app.use("/api/chat",protect,proxyWithUser(getServiceUrl("CHAT_SERVICE")))
+app.use("/api/agent",protect,proxyWithUser(getServiceUrl("AGENT_SERVICE")))
+app.use("/api/billing",protect,proxyWithUser(getServiceUrl("BILLING_SERVICE")))
 
 
 app.get("/", (req, res) => {
