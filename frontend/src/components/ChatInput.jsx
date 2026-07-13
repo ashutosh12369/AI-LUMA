@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Send, Paperclip,  Square, Zap, MessageSquare, Code2, Presentation, Image as ImageIcon, Globe, FileText, X, BarChart, Github } from "lucide-react";
+import { Send, Paperclip,  Square, Zap, MessageSquare, Code2, Presentation, Image as ImageIcon, Globe, FileText, X, BarChart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage, setArtifacts, setIsLoading } from "../redux/message.slice";
 import { sendPrompt } from "../features/agent.api";
@@ -104,11 +104,7 @@ github:"Chat with your GitHub repos..."
     label:"Data"
   },
 
-  {
-    id:"github",
-    icon:Github,
-    label:"GitHub"
-  }
+  { id: "github", label: "GitHub", icon: Code2, desc: "Interact with your GitHub repositories", model: "MODEL_PLACEHOLDER_M05" },
 
 ];
 
