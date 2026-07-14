@@ -13,7 +13,7 @@ function NeuralPulse() {
       {[0, 0.45, 0.9].map((delay, i) => (
         <motion.span
           key={i}
-          className="absolute inset-0 rounded-full border border-teal-400/30"
+          className="absolute inset-0 rounded-full border border-cyan-400/30"
           initial={{ scale: 0.3, opacity: 0.55 }}
           animate={{ scale: 1.7, opacity: 0 }}
           transition={{
@@ -25,8 +25,8 @@ function NeuralPulse() {
         />
       ))}
       <motion.span
-        className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-teal-300 to-amber-400"
-        style={{ boxShadow: "0 0 14px rgba(94,234,212,0.55)" }}
+        className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-cyan-300 to-violet-400"
+        style={{ boxShadow: "0 0 14px rgba(125,211,252,0.55)" }}
         animate={{ scale: [1, 1.25, 1] }}
         transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -180,15 +180,8 @@ if (latestArtifactMessage) {
       {messages.length === 0 && !isLoading ? (
         <div className="h-full flex flex-col items-center justify-center gap-4 text-center">
           <div className="flex flex-col gap-1.5">
-            <div className="relative w-16 h-16 md:w-20 md:h-20 mx-auto mb-4">
-              <div className="absolute inset-0 rounded-full border border-teal-500/20 animate-spin" style={{animationDuration: '8s'}} />
-              <div className="absolute inset-2 rounded-full border border-cyan-400/15 animate-spin" style={{animationDuration: '12s', animationDirection: 'reverse'}} />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gradient-to-br from-teal-400 to-cyan-500 shadow-[0_0_20px_rgba(20,184,166,0.4)]" />
-              </div>
-            </div>
-            <h1 className="text-[28px] md:text-[32px] font-extrabold bg-gradient-to-r from-teal-400 to-cyan-300 bg-clip-text text-transparent tracking-tight">LUMA</h1>
-            <h3 className="text-[15px] font-semibold text-slate-400 tracking-tight">How can I help you today?</h3>
+            <h1 className="text-[20px] font-semibold text-slate-200 tracking-tight">AI-LUMA</h1>
+            <h3 className="text-[15px] font-semibold text-slate-400 tracking-tight">How can I help you?</h3>
             <p className="text-[13px] text-slate-600 max-w-[260px] leading-relaxed">Ask me anything — code, ideas, explanations, or just a quick question.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-2 mt-1">
@@ -196,7 +189,7 @@ if (latestArtifactMessage) {
               <button
                 key={s}
                 onClick={() => handleSuggestionClick(s)}
-                className="text-[12px] text-slate-400 bg-white/[0.04] border border-white/[0.07] px-3.5 py-1.5 rounded-lg hover:bg-teal-500/10 hover:border-teal-500/20 hover:text-slate-200 transition-colors duration-150 cursor-pointer"
+                className="text-[12px] text-slate-400 bg-white/[0.04] border border-white/[0.07] px-3.5 py-1.5 rounded-lg hover:bg-white/[0.08] hover:text-slate-200 transition-colors duration-150 cursor-pointer"
               >
                 {s}
               </button>

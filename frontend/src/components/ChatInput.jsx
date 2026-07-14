@@ -296,11 +296,11 @@ catch(error){
   };
 
   return (
-   <div className="w-full overflow-hidden px-3 md:px-5 py-4 border-t border-white/[0.06] bg-[#0a0d11]">
+   <div className="w-full overflow-hidden px-3 md:px-5 py-4 border-t border-white/[0.06] bg-[#0d0f14]">
       <div className="flex flex-col gap-2 bg-white/[0.03] border border-white/[0.07] rounded-2xl px-4 pt-3.5 pb-3">
 
 
-    <div className="flex w-full md:w-[80%] gap-2 pr-2 flex-wrap">
+    <div className="flex w-[80%] gap-2 pr-2 flex-wrap">
 
     <button
       onClick={() => setIsAutonomous(!isAutonomous)}
@@ -342,7 +342,7 @@ catch(error){
 
             ${
               isActive
-                ? "bg-gradient-to-r from-teal-500 to-cyan-600 text-white border-transparent shadow-[0_1px_8px_rgba(20,184,166,.35)]"
+                ? "bg-gradient-to-r from-indigo-500 to-violet-600 text-white border-transparent shadow-[0_1px_8px_rgba(99,102,241,.35)]"
                 : "bg-white/[0.03] text-slate-400 border-white/[0.06] hover:bg-white/[0.07]"
             }
           `}
@@ -495,7 +495,7 @@ className="text-slate-500 hover:text-white"
           placeholder={
 placeholders[selectedAgent]
 }
-          rows={2}
+          rows={3}
           disabled={isLoading}
           className="w-full bg-transparent outline-none resize-none text-[14px] text-slate-200 placeholder:text-slate-600 leading-relaxed [scrollbar-width:none] [&::-webkit-scrollbar]:hidden disabled:opacity-50"
         />
@@ -601,7 +601,7 @@ isListening
               ${isLoading
                 ? "bg-white text-[#0d0f14] hover:bg-slate-200"
                 : value.trim()
-                ? "bg-gradient-to-br from-teal-500 to-cyan-600 hover:opacity-90 text-white"
+                ? "bg-gradient-to-br from-indigo-500 to-violet-700 hover:opacity-90 text-white"
                 : "bg-white/[0.05] text-slate-600 cursor-not-allowed"
               }`}
           >
