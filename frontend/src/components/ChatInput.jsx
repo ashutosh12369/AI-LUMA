@@ -310,7 +310,7 @@ catch(error){
       `}
     >
       <Zap size={14} className={isAutonomous ? "text-white" : "text-slate-500"} />
-      Auto
+      Auto-Pilot
     </button>
 
     {(() => {
