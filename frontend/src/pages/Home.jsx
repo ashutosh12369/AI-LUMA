@@ -50,14 +50,14 @@ const login=async (token)=>{
   };
 
   return (
-<div className="h-screen flex bg-transparent text-white overflow-hidden">
+<div className="h-screen flex bg-[#0d0f14] text-white overflow-hidden">
       <Sidebar />
       <ChatArea />
       <ArtifactPanel />
 
       {!isCheckingAuth && !userData && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="w-[92vw] max-w-[340px] glass-panel rounded-2xl p-7 flex flex-col gap-5">
+          <div className="w-[92vw] max-w-[340px] bg-[#13151c] border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-5">
 
             <div className="flex flex-col gap-1">
               <h2 className="text-[17px] font-semibold text-slate-100 tracking-tight">Welcome to AI-LUMA</h2>
@@ -66,7 +66,7 @@ const login=async (token)=>{
 
             <button
   onClick={handleGoogleLogin}
-  className="w-full flex items-center justify-center gap-3 py-[11px] rounded-xl text-sm font-medium text-white bg-slate-700 hover:bg-slate-600 active:bg-slate-800 border border-white/10 transition-all duration-150 cursor-pointer"
+  className="w-full flex items-center justify-center gap-3 py-[11px] rounded-xl text-sm font-medium text-white bg-gradient-to-br from-indigo-500 to-violet-700 hover:from-indigo-400 hover:to-violet-600 active:from-indigo-600 active:to-violet-800 border border-indigo-500/30 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transition-all duration-150 cursor-pointer"
 >
   <FaGoogle size={15} className="text-white" />
   Continue with Google
@@ -74,7 +74,7 @@ const login=async (token)=>{
 
 <button
   onClick={handleGithubLogin}
-  className="w-full flex items-center justify-center gap-3 py-[11px] rounded-xl text-sm font-medium text-white bg-[#24292e] hover:bg-[#2f363d] active:bg-[#1a1e22] border border-white/10 transition-all duration-150 cursor-pointer"
+  className="w-full flex items-center justify-center gap-3 py-[11px] rounded-xl text-sm font-medium text-white bg-[#24292e] hover:bg-[#2f363d] active:bg-[#1a1e22] border border-white/10 shadow-lg shadow-black/20 hover:shadow-black/30 transition-all duration-150 cursor-pointer"
 >
   <FaGithub size={15} className="text-white" />
   Continue with GitHub

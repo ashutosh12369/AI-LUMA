@@ -59,7 +59,7 @@ export default function BillingDrawer({
 
             theme: {
 
-                color: "#3b82f6"
+                color: "#4F46E5"
 
             }
 
@@ -104,7 +104,7 @@ export default function BillingDrawer({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: .25 }}
-            className="fixed right-0 top-0 z-50 h-screen w-[100vw] max-w-[380px] glass-panel border-l border-white/10 shadow-2xl flex flex-col"
+            className="fixed right-0 top-0 z-50 h-screen w-[100vw] max-w-[380px] bg-[#0f1117] border-l border-white/10 shadow-2xl flex flex-col"
           >
 
             {/* Header */}
@@ -177,7 +177,7 @@ export default function BillingDrawer({
                   <div className="h-2 rounded-full bg-white/10 overflow-hidden">
 
                   <div
-  className="h-full bg-blue-500 transition-all duration-500"
+  className="h-full bg-indigo-500 transition-all duration-500"
   style={{
     width: `${
       (
@@ -210,7 +210,7 @@ export default function BillingDrawer({
 
                 </h3>
 
-                <p className="text-blue-400 text-2xl font-bold mt-2">
+                <p className="text-indigo-400 text-2xl font-bold mt-2">
 
                   ₹199
 
@@ -222,7 +222,7 @@ export default function BillingDrawer({
 
                 </p>
 
-                <button className="mt-4 w-full rounded-lg bg-blue-600 hover:bg-blue-700 py-2 text-white" onClick={()=>handleUpgrade("starter")}>
+                <button className="mt-4 w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 py-2 text-white" onClick={()=>handleUpgrade("starter")}>
 
                   Upgrade
 
@@ -232,9 +232,9 @@ export default function BillingDrawer({
 
               {/* Pro */}
 
-              <div className="rounded-xl border border-blue-500 p-4 relative">
+              <div className="rounded-xl border border-indigo-500 p-4 relative">
 
-                <span className="absolute right-3 top-3 text-xs bg-blue-600 px-2 py-1 rounded-full text-white">
+                <span className="absolute right-3 top-3 text-xs bg-indigo-600 px-2 py-1 rounded-full text-white">
 
                   Popular
 
@@ -251,7 +251,7 @@ export default function BillingDrawer({
 
                 </h3>
 
-                <p className="text-blue-400 text-2xl font-bold mt-2">
+                <p className="text-indigo-400 text-2xl font-bold mt-2">
 
                   ₹499
 
@@ -263,7 +263,7 @@ export default function BillingDrawer({
 
                 </p>
 
-                <button className="mt-4 w-full rounded-lg bg-blue-600 hover:bg-blue-700 py-2 text-white" onClick={()=>handleUpgrade("pro")}>
+                <button className="mt-4 w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 py-2 text-white" onClick={()=>handleUpgrade("pro")}>
 
                   Upgrade
 

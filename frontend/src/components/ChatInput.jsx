@@ -296,8 +296,8 @@ catch(error){
   };
 
   return (
-   <div className="w-full overflow-hidden px-3 md:px-5 py-4 border-t border-white/[0.06]">
-      <div className="flex flex-col gap-2 glass-panel rounded-2xl px-4 pt-3.5 pb-3">
+   <div className="w-full overflow-hidden px-3 md:px-5 py-4 border-t border-white/[0.06] bg-[#0d0f14]">
+      <div className="flex flex-col gap-2 bg-white/[0.03] border border-white/[0.07] rounded-2xl px-4 pt-3.5 pb-3">
 
 
     <div className="flex w-full gap-2 pr-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-1">
@@ -342,7 +342,7 @@ catch(error){
 
             ${
               isActive
-                ? "bg-white text-slate-900 border-transparent font-semibold"
+                ? "bg-gradient-to-r from-indigo-500 to-violet-600 text-white border-transparent shadow-[0_1px_8px_rgba(99,102,241,.35)]"
                 : "bg-white/[0.03] text-slate-400 border-white/[0.06] hover:bg-white/[0.07]"
             }
           `}
@@ -601,7 +601,7 @@ isListening
               ${isLoading
                 ? "bg-white text-[#0d0f14] hover:bg-slate-200"
                 : value.trim()
-                ? "bg-white text-slate-900"
+                ? "bg-gradient-to-br from-indigo-500 to-violet-700 hover:opacity-90 text-white"
                 : "bg-white/[0.05] text-slate-600 cursor-not-allowed"
               }`}
           >
