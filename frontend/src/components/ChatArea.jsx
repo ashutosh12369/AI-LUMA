@@ -4,6 +4,7 @@ import ChatInput from "./ChatInput";
 import MessageBubble from "./MessageBubble";
 import MessageList from "./MessageList";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 
 function ChatArea() {
@@ -40,6 +41,7 @@ function ChatArea() {
      <ChatInput
   setBanner={setBanner}
 />
+<Footer />
 
     </div>
   );

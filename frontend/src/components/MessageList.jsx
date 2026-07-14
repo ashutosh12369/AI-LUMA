@@ -13,7 +13,7 @@ function NeuralPulse() {
       {[0, 0.45, 0.9].map((delay, i) => (
         <motion.span
           key={i}
-          className="absolute inset-0 rounded-full border border-cyan-400/30"
+          className="absolute inset-0 rounded-full border border-blue-400/30"
           initial={{ scale: 0.3, opacity: 0.55 }}
           animate={{ scale: 1.7, opacity: 0 }}
           transition={{
@@ -25,8 +25,7 @@ function NeuralPulse() {
         />
       ))}
       <motion.span
-        className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-cyan-300 to-violet-400"
-        style={{ boxShadow: "0 0 14px rgba(125,211,252,0.55)" }}
+        className="w-2.5 h-2.5 rounded-full bg-blue-400"
         animate={{ scale: [1, 1.25, 1] }}
         transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -180,7 +179,7 @@ if (latestArtifactMessage) {
       {messages.length === 0 && !isLoading ? (
         <div className="h-full flex flex-col items-center justify-center gap-4 text-center">
           <div className="flex flex-col gap-1.5">
-            <h1 className="text-[20px] font-semibold text-slate-200 tracking-tight">AI-LUMA</h1>
+            <h1 className="text-[24px] font-bold text-white tracking-tight">AI-LUMA</h1>
             <h3 className="text-[15px] font-semibold text-slate-400 tracking-tight">How can I help you?</h3>
             <p className="text-[13px] text-slate-600 max-w-[260px] leading-relaxed">Ask me anything — code, ideas, explanations, or just a quick question.</p>
           </div>
@@ -189,7 +188,7 @@ if (latestArtifactMessage) {
               <button
                 key={s}
                 onClick={() => handleSuggestionClick(s)}
-                className="text-[12px] text-slate-400 bg-white/[0.04] border border-white/[0.07] px-3.5 py-1.5 rounded-lg hover:bg-white/[0.08] hover:text-slate-200 transition-colors duration-150 cursor-pointer"
+                className="text-[12px] px-3.5 py-1.5 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors duration-150 cursor-pointer"
               >
                 {s}
               </button>

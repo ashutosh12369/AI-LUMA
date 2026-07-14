@@ -56,8 +56,8 @@ const markdown = (content || "")
   leading-relaxed
           ${
             isUser
-              ? "bg-gradient-to-br from-indigo-500 to-violet-700 text-white rounded-tr-sm"
-              : " text-slate-200 rounded-tl-sm"
+              ? "bg-slate-700 text-white rounded-tr-sm"
+              : " glass-panel text-slate-200 rounded-tl-sm"
           }`}
         >
           {images.length > 0 && (
@@ -131,7 +131,7 @@ const markdown = (content || "")
         href={href}
         target="_blank"
         rel="noreferrer"
-        className="text-indigo-400 underline inline-flex items-center gap-1"
+        className="text-blue-400 underline inline-flex items-center gap-1"
       >
         {children}
         <FiExternalLink size={11} />
