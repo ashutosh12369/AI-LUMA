@@ -56,8 +56,8 @@ const markdown = (content || "")
   leading-relaxed
           ${
             isUser
-              ? "bg-gradient-to-br from-indigo-500 to-violet-700 text-white rounded-tr-sm"
-              : " text-slate-200 rounded-tl-sm"
+              ? "bg-gradient-to-br from-teal-500 to-cyan-600 text-white rounded-tr-sm"
+              : "border-l-2 border-teal-500/30 text-slate-200 rounded-tl-sm"
           }`}
         >
           {images.length > 0 && (
@@ -131,7 +131,7 @@ const markdown = (content || "")
         href={href}
         target="_blank"
         rel="noreferrer"
-        className="text-indigo-400 underline inline-flex items-center gap-1"
+        className="text-teal-400 underline inline-flex items-center gap-1"
       >
         {children}
         <FiExternalLink size={11} />
@@ -161,7 +161,7 @@ const markdown = (content || "")
 
       if (!className) {
         return (
-          <code className="px-1.5 py-0.5 rounded bg-white/10 text-pink-400">
+          <code className="px-1.5 py-0.5 rounded bg-white/10 text-teal-300">
             {value}
           </code>
         );

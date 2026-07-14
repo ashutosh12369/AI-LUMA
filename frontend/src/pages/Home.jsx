@@ -50,23 +50,23 @@ const login=async (token)=>{
   };
 
   return (
-<div className="h-screen flex bg-[#0d0f14] text-white overflow-hidden">
+<div className="h-screen flex bg-[#0a0d11] text-white overflow-hidden">
       <Sidebar />
       <ChatArea />
       <ArtifactPanel />
 
       {!userData && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="w-[340px] bg-[#13151c] border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-5">
+          <div className="w-[92vw] max-w-[340px] bg-[#0f1219] border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-5">
 
             <div className="flex flex-col gap-1">
-              <h2 className="text-[17px] font-semibold text-slate-100 tracking-tight">Welcome to AI-LUMA</h2>
+              <h2 className="text-[17px] font-semibold text-slate-100 tracking-tight">Welcome to LUMA</h2>
               <p className="text-[13px] text-slate-500">Please login to continue using the app.</p>
             </div>
 
             <button
   onClick={handleGoogleLogin}
-  className="w-full flex items-center justify-center gap-3 py-[11px] rounded-xl text-sm font-medium text-white bg-gradient-to-br from-indigo-500 to-violet-700 hover:from-indigo-400 hover:to-violet-600 active:from-indigo-600 active:to-violet-800 border border-indigo-500/30 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transition-all duration-150 cursor-pointer"
+  className="w-full flex items-center justify-center gap-3 py-[11px] rounded-xl text-sm font-medium text-white bg-gradient-to-br from-teal-500 to-cyan-600 hover:from-teal-400 hover:to-cyan-500 active:from-teal-600 active:to-cyan-700 border border-teal-500/30 shadow-lg shadow-teal-500/20 hover:shadow-teal-500/30 transition-all duration-150 cursor-pointer"
 >
   <FaGoogle size={15} className="text-white" />
   Continue with Google
