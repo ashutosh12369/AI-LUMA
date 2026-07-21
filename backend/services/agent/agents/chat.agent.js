@@ -36,7 +36,7 @@ const searchContext = state.searchResults
   ? `
 Web Search Results:
 
-${state.searchResults}
+${JSON.stringify(state.searchResults, null, 2)}
 
 Answer the user using only the above search results.
 `
