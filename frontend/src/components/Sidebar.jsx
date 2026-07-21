@@ -78,6 +78,18 @@ export default function Sidebar() {
     setEditingId(null);
   };
 
+  const handleEditKeyDown = (e, chatId) => {
+    if (e.key === "Enter") {
+      commitRename(chatId);
+    } else if (e.key === "Escape") {
+      setEditingId(null);
+    }
+  };
+
+  const handleEditBlur = (chatId) => {
+    commitRename(chatId);
+  };
+
   const handleDelete = async (e, chatId) => {
     e.stopPropagation();
     try {
