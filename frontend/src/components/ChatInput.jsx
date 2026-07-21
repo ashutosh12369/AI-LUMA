@@ -506,6 +506,12 @@ className="text-slate-500 hover:text-white"
         <textarea
           value={value}
           onChange={e => setValue(e.target.value)}
+          onKeyDown={e => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
           placeholder={
 placeholders[selectedAgent]
 }
