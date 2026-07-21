@@ -120,7 +120,7 @@ ${state.prompt}
       ...state,
 
       response:
-        "❌ Failed to generate image."
+        `❌ Failed to generate image.\n\nError: ${error.message}`
 
     };
 
