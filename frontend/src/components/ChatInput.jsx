@@ -23,6 +23,7 @@ const recognitionRef = useRef(null);
   const { selectedConversation } = useSelector(state => state.conversation);
    const { isLoading } = useSelector(state => state.message);
 const fileRef = useRef(null);
+const abortControllerRef = useRef(null);
 
 const [
 
@@ -196,6 +197,15 @@ const toggleMic = () => {
 
 
   const handleSend = async () => {
+    if (isLoading) {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+      dispatch(setIsLoading(false));
+      return;
+    }
+
     const prompt = value.trim();
     if (!prompt) return;
 
@@ -254,7 +264,8 @@ if(selectedFile){
 
 setSelectedFile(null)
 
-      const data = await sendPrompt(formData);
+abortControllerRef.current = new AbortController();
+      const data = await sendPrompt(formData, { signal: abortControllerRef.current.signal });
     console.log(data)
      dispatch(
   addMessage({
@@ -274,6 +285,9 @@ if(data.artifacts){
   );
 }}
 catch(error){
+  if (error.name === "CanceledError" || error.message === "canceled") {
+    return;
+  }
 
   setBanner({
 
