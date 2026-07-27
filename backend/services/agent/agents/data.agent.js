@@ -10,8 +10,9 @@ export const dataAgent = async (state) => {
     const llm = getModel("coding");
 
     let csvData = "";
-    if (state.file && state.file.buffer) {
-      csvData = state.file.buffer.toString("utf-8");
+    if (state.file && state.file.path) {
+      const fs = await import("fs");
+      csvData = fs.readFileSync(state.file.path, "utf-8");
     }
 
     if (!csvData) {
