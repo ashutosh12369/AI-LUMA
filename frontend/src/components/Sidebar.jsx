@@ -460,7 +460,7 @@ export default function Sidebar() {
         fixed lg:static inset-y-0 left-0 z-50
         w-[270px] h-screen shrink-0
         glass-panel border-r border-white/10
-        transition-transform duration-250
+        transition-transform duration-300
         ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
       `}>
         <SidebarContent />

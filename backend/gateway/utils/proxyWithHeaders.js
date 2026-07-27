@@ -34,6 +34,12 @@ export const proxyWithUser =
 
     return proxyReqOpts;
 
+   },
+   proxyReqBodyDecorator: (bodyContent, srcReq) => {
+     if (srcReq.body && Object.keys(srcReq.body).length > 0) {
+       return JSON.stringify(srcReq.body);
+     }
+     return bodyContent;
    }
 
   }

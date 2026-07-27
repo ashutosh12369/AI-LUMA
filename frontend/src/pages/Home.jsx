@@ -8,7 +8,9 @@ import { setUserData } from "../redux/user.slice";
 import { signInWithPopup, GithubAuthProvider } from "firebase/auth";
 import { auth, googleProvider, githubProvider } from "../../firebase";
 
+import { useState } from "react";
 function Home() {
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const { userData, isCheckingAuth } = useSelector(state => state.user);
   const dispatch=useDispatch()
 const login=async (token)=>{
@@ -51,8 +53,8 @@ const login=async (token)=>{
 
   return (
 <div className="h-screen flex bg-space bg-grid text-white overflow-hidden relative">
-      <Sidebar />
-      <ChatArea />
+      <Sidebar isMobileOpen={isMobileSidebarOpen} setIsMobileOpen={setIsMobileSidebarOpen} />
+      <ChatArea onOpenSidebar={() => setIsMobileSidebarOpen(true)} />
       <ArtifactPanel />
 
       {!isCheckingAuth && !userData && (

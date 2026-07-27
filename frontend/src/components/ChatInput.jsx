@@ -310,8 +310,8 @@ catch(error){
   };
 
   return (
-   <div className="w-full px-4 md:px-8 pb-6 pt-2 bg-transparent z-10 shrink-0">
-      <div className="flex flex-col gap-3 glass-panel rounded-[2rem] px-5 pt-4 pb-3 shadow-2xl shadow-indigo-500/10 mx-auto max-w-5xl">
+   <div className="w-full px-2 md:px-8 pb-3 md:pb-6 pt-2 bg-transparent z-10 shrink-0">
+      <div className="flex flex-col gap-3 glass-panel rounded-[1.5rem] md:rounded-[2rem] px-4 md:px-5 pt-3 md:pt-4 pb-2 md:pb-3 shadow-2xl shadow-indigo-500/10 mx-auto max-w-5xl">
 
 
     <div className="flex items-center w-full gap-2 pr-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-2 border-b border-white/5">

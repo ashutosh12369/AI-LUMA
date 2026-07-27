@@ -177,7 +177,7 @@ if (latestArtifactMessage) {
   };
 
   return (
-    <div ref={scrollContainerRef} className="relative flex-1 overflow-y-auto px-6 py-6 space-y-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div ref={scrollContainerRef} className="relative flex-1 overflow-y-auto px-3 md:px-6 py-4 md:py-6 space-y-4 md:space-y-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {messages.length === 0 && !isLoading ? (
         <div className="h-full flex flex-col items-center justify-center text-center px-4 w-full max-w-5xl mx-auto">
           

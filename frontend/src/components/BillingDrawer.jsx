@@ -65,19 +65,20 @@ export default function BillingDrawer({
 
         };
 
-        const razorpay =
-            new window.Razorpay(options);
+        if (!window.Razorpay) {
+            alert("Razorpay failed to load. Please disable ad-blockers or try again later.");
+            return;
+        }
 
+        const razorpay = new window.Razorpay(options);
+        razorpay.on('payment.failed', function (response){
+            alert("Payment failed: " + response.error.description);
+        });
         razorpay.open();
-
-    }
-
-    catch (error) {
-
+    } catch (error) {
         console.log(error);
-
+        alert("Failed to initiate payment: " + (error.response?.data?.message || error.message));
     }
-
 };
  console.log((
 (userData?.credits || 0) /
