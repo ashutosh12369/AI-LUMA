@@ -51,13 +51,18 @@ Requirements:
 
     let parsed;
     try {
-      const cleanJson = aiResponse.content.replace(/```json/g, "").replace(/```/g, "").trim();
-      parsed = JSON.parse(cleanJson);
+      let content = aiResponse.content;
+      const firstBrace = content.indexOf("{");
+      const lastBrace = content.lastIndexOf("}");
+      if (firstBrace !== -1 && lastBrace !== -1) {
+        content = content.substring(firstBrace, lastBrace + 1);
+      }
+      parsed = JSON.parse(content);
     } catch (e) {
       console.error("Failed to parse JSON from data agent", e);
       return {
         ...state,
-        response: "❌ Failed to generate visualization format."
+        response: "❌ Failed to generate visualization format. " + e.message
       };
     }
 
