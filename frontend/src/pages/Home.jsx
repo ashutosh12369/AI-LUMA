@@ -50,10 +50,13 @@ const login=async (token)=>{
   };
 
   return (
-<div className="h-screen flex bg-space bg-grid text-white overflow-hidden relative">
-      <Sidebar />
-      <ChatArea />
-      <ArtifactPanel />
+<div className="h-screen flex bg-space text-white overflow-hidden relative">
+      <div className="bg-grid absolute inset-0"></div>
+      <div className="z-10 flex w-full h-full">
+        <Sidebar />
+        <ChatArea />
+        <ArtifactPanel />
+      </div>
 
       {!isCheckingAuth && !userData && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
