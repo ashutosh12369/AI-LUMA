@@ -5,7 +5,7 @@ export default function Navbar() {
   const { conversations, selectedConversation } = useSelector(state => state.conversation);
   const {messages} = useSelector(state => state.message);
   return (
-    <div className="h-14 flex items-center justify-between px-5 border-b border-white/[0.06] bg-[#0d0f14]">
+    <div className="h-14 flex items-center justify-between px-5 border-b border-white/[0.06] bg-transparent">
 
       {/* Left — chat title */}
       <div className="flex items-center gap-2.5">

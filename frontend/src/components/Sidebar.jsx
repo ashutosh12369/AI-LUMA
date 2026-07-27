@@ -8,6 +8,7 @@ import { addConversation, setConversations, setSelectedConversation, setConvTitl
 import { getMessages } from "../features/message.api";
 import { setArtifacts, setMessages } from "../redux/message.slice";
 import BillingDrawer from "./BillingDrawer";
+import Logo from "./Logo";
 
 export default function Sidebar() {
   const [hovered, setHovered]     = useState(null);
@@ -160,7 +161,7 @@ export default function Sidebar() {
 
   /* ── Collapsed rail — desktop only ── */
   const CollapsedRail = () => (
-    <div className="hidden lg:flex flex-col items-center w-[56px] h-screen bg-[#0d0f14] border-r border-white/[0.06] py-4 gap-1 shrink-0">
+    <div className="hidden lg:flex flex-col items-center w-[56px] h-screen glass-panel border-r border-white/10 py-4 gap-1 shrink-0">
       <button
         onClick={() => setCollapsed(false)}
         className="flex items-center justify-center w-9 h-9 rounded-xl text-slate-500 hover:text-slate-200 hover:bg-white/[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer mb-1"
@@ -210,12 +211,12 @@ export default function Sidebar() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
 
-      {/* Header */}
-      <div className="flex items-center gap-2.5 px-4 py-4 border-b border-white/[0.06]">
+      {/* Header & Logo */}
+      <div className="flex flex-col items-center px-4 pt-4 pb-2 border-b border-white/5 relative">
         {/* Desktop collapse */}
         <button
           onClick={() => setCollapsed(true)}
-          className="hidden lg:flex items-center justify-center w-7 h-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer"
+          className="hidden lg:flex absolute top-4 left-4 items-center justify-center w-7 h-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer"
         >
           <PanelIcon />
         </button>
@@ -223,34 +224,22 @@ export default function Sidebar() {
         {/* Mobile close */}
         <button
           onClick={() => setMobileOpen(false)}
-          className="lg:hidden flex items-center justify-center w-7 h-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer"
+          className="lg:hidden absolute top-4 left-4 flex items-center justify-center w-7 h-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer"
         >
           <X size={15} />
         </button>
 
-        <span className="text-[16px] font-semibold text-slate-100 tracking-tight flex-1">AI-LUMA</span>
+        <Logo />
 
-        <span className="text-[10px] font-medium text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full tracking-wide">
-         {userData?.plan ?? "pro"}
-        </span>
-
-        <button
-          onClick={handleCreateConversation}
-          className="flex items-center justify-center w-7 h-7 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/[0.05] transition-colors duration-150 bg-transparent border-none cursor-pointer"
-        >
-          <PenSquare size={14} />
-        </button>
-      </div>
-
-      {/* New Chat */}
-      <div className="px-4 pt-4 pb-1">
-        <button
-          onClick={handleCreateConversation}
-          className="w-full flex items-center justify-center gap-2 text-sm font-medium text-white bg-gradient-to-br from-indigo-500 to-violet-700 rounded-xl py-[10px] border-none cursor-pointer hover:opacity-90 transition-opacity duration-150"
-        >
-          <Plus size={15} />
-          New Chat
-        </button>
+        <div className="w-full mt-2">
+          <button
+            onClick={handleCreateConversation}
+            className="w-full flex items-center justify-center gap-2 text-sm font-medium text-white bg-gradient-to-r from-teal-400/80 via-indigo-500/80 to-purple-500/80 rounded-2xl py-[12px] border border-white/20 shadow-[0_0_15px_rgba(99,102,241,0.4)] cursor-pointer hover:shadow-[0_0_25px_rgba(99,102,241,0.6)] hover:border-white/40 transition-all duration-300"
+          >
+            <Plus size={16} />
+            New Chat
+          </button>
+        </div>
       </div>
 
       {
@@ -470,7 +459,7 @@ export default function Sidebar() {
       <div className={`
         fixed lg:static inset-y-0 left-0 z-50
         w-[270px] h-screen shrink-0
-        bg-[#0d0f14] border-r border-white/[0.06]
+        glass-panel border-r border-white/10
         transition-transform duration-250
         ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
       `}>

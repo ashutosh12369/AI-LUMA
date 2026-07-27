@@ -1,4 +1,5 @@
 import MessageBubble from "./MessageBubble";
+import Logo from "./Logo";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getMessages } from "../features/message.api";
@@ -178,20 +179,55 @@ if (latestArtifactMessage) {
   return (
     <div ref={scrollContainerRef} className="relative flex-1 overflow-y-auto px-6 py-6 space-y-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {messages.length === 0 && !isLoading ? (
-        <div className="h-full flex flex-col items-center justify-center gap-4 text-center">
-          <div className="flex flex-col gap-1.5">
-            <h1 className="text-[20px] font-semibold text-slate-200 tracking-tight">AI-LUMA</h1>
-            <h3 className="text-[15px] font-semibold text-slate-400 tracking-tight">How can I help you?</h3>
-            <p className="text-[13px] text-slate-600 max-w-[260px] leading-relaxed">Ask me anything — code, ideas, explanations, or just a quick question.</p>
-          </div>
-          <div className="flex flex-wrap justify-center gap-2 mt-1">
-            {["Write a Netflix clone", "Explain Redis", "Build a dashboard"].map((s) => (
+        <div className="h-full flex flex-col items-center justify-center text-center px-4 w-full max-w-5xl mx-auto">
+          
+          <Logo />
+
+          <h3 className="text-[24px] mt-2 font-medium text-slate-200 tracking-tight">
+            How can I help you?
+          </h3>
+          <p className="text-[15px] text-slate-400 mt-2 mb-10 max-w-[400px] leading-relaxed">
+            Ask me anything — code, ideas, explanations, or just a quick question.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+            {[
+              {
+                title: "CODE TEMPLATE:",
+                subtitle: "Netflix Clone",
+                desc: "Generate a basic UI and data structure.",
+                prompt: "Write a Netflix clone"
+              },
+              {
+                title: "EXPLANATION:",
+                subtitle: "Redis & Datastructures",
+                desc: "Understand key-value stores.",
+                prompt: "Explain Redis"
+              },
+              {
+                title: "DASHBOARD:",
+                subtitle: "Visualizing Data",
+                desc: "Create a visual summary.",
+                prompt: "Build a dashboard"
+              }
+            ].map((card, idx) => (
               <button
-                key={s}
-                onClick={() => handleSuggestionClick(s)}
-                className="text-[12px] text-slate-400 bg-white/[0.04] border border-white/[0.07] px-3.5 py-1.5 rounded-lg hover:bg-white/[0.08] hover:text-slate-200 transition-colors duration-150 cursor-pointer"
+                key={idx}
+                onClick={() => handleSuggestionClick(card.prompt)}
+                className="glass-card flex flex-col items-start text-left p-5 rounded-2xl cursor-pointer hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 group"
               >
-                {s}
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-indigo-500/20 group-hover:border-indigo-500/30 transition-colors">
+                    <span className="text-xl opacity-80">{idx === 0 ? "N" : idx === 1 ? "📚" : "📊"}</span>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-semibold text-slate-500 tracking-wider uppercase">{card.title}</p>
+                    <p className="text-[15px] font-medium text-slate-200 group-hover:text-white transition-colors">{card.subtitle}</p>
+                  </div>
+                </div>
+                <p className="text-[13px] text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">
+                  {card.desc}
+                </p>
               </button>
             ))}
           </div>

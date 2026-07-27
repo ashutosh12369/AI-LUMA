@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Send, Paperclip,  Square, Zap, MessageSquare, Code2, Presentation, Image as ImageIcon, Globe, FileText, X, BarChart } from "lucide-react";
+import { Send, Paperclip, Square, Zap, MessageSquare, Code2, Presentation, Image as ImageIcon, Globe, FileText, X, BarChart, Wand2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage, setArtifacts, setIsLoading } from "../redux/message.slice";
 import { sendPrompt } from "../features/agent.api";
@@ -310,11 +310,16 @@ catch(error){
   };
 
   return (
-   <div className="w-full overflow-hidden px-3 md:px-5 py-4 border-t border-white/[0.06] bg-[#0d0f14]">
-      <div className="flex flex-col gap-2 bg-white/[0.03] border border-white/[0.07] rounded-2xl px-4 pt-3.5 pb-3">
+   <div className="w-full px-4 md:px-8 pb-6 pt-2 bg-transparent z-10 shrink-0">
+      <div className="flex flex-col gap-3 glass-panel rounded-[2rem] px-5 pt-4 pb-3 shadow-2xl shadow-indigo-500/10 mx-auto max-w-5xl">
 
 
-    <div className="flex w-full gap-2 pr-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-1">
+    <div className="flex items-center w-full gap-2 pr-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-2 border-b border-white/5">
+    
+    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-slate-400 bg-white/5 mr-2 shrink-0 border border-white/5">
+      <Wand2 size={13} className="text-slate-500" />
+      Creation Tools
+    </div>
 
     <button
       onClick={() => setIsAutonomous(!isAutonomous)}
@@ -617,21 +622,21 @@ isListening
           <button
             onClick={handleSend}
             disabled={!isLoading && !value.trim()}
-            className={`flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all duration-150
+            className={`flex items-center justify-center w-9 h-9 rounded-full border-none cursor-pointer transition-all duration-300 shadow-lg
               ${isLoading
                 ? "bg-white text-[#0d0f14] hover:bg-slate-200"
                 : value.trim()
-                ? "bg-gradient-to-br from-indigo-500 to-violet-700 hover:opacity-90 text-white"
-                : "bg-white/[0.05] text-slate-600 cursor-not-allowed"
+                ? "bg-gradient-to-r from-indigo-500 to-purple-500 hover:opacity-90 text-white shadow-indigo-500/30"
+                : "bg-white/10 text-slate-500 cursor-not-allowed shadow-none"
               }`}
           >
-            {isLoading ? <Square size={12} fill="currentColor" /> : <Send size={14} />}
+            {isLoading ? <Square size={13} fill="currentColor" /> : <Send size={15} className="ml-0.5" />}
           </button>
 
         </div>
       </div>
 
-      <p className="text-center text-[10.5px] text-slate-700 mt-2.5">
+      <p className="text-center text-[11px] text-slate-500/70 mt-3 font-medium tracking-wide">
         AI-LUMA can make mistakes. Verify important info.
       </p>
     </div>
