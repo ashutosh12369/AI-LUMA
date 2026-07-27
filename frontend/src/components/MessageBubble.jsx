@@ -56,8 +56,8 @@ const markdown = (content || "")
   leading-relaxed
           ${
             isUser
-              ? "bg-gradient-to-br from-indigo-500 to-violet-700 text-white rounded-tr-sm"
-              : " text-slate-200 rounded-tl-sm"
+              ? "bg-gradient-to-r from-teal-400/90 via-indigo-500/90 to-purple-500/90 text-white rounded-tr-sm shadow-[0_0_15px_rgba(99,102,241,0.2)]"
+              : " text-slate-200 rounded-tl-sm glass-card p-4"
           }`}
         >
           {images.length > 0 && (

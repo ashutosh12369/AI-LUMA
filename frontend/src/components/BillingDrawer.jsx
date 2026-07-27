@@ -177,7 +177,7 @@ export default function BillingDrawer({
                   <div className="h-2 rounded-full bg-white/10 overflow-hidden">
 
                   <div
-  className="h-full bg-indigo-500 transition-all duration-500"
+  className="h-full bg-gradient-to-r from-teal-400 via-indigo-500 to-purple-500 transition-all duration-500"
   style={{
     width: `${
       (
@@ -222,7 +222,7 @@ export default function BillingDrawer({
 
                 </p>
 
-                <button className="mt-4 w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 py-2 text-white" onClick={()=>handleUpgrade("starter")}>
+                <button className="mt-4 w-full rounded-lg bg-gradient-to-r from-teal-400 via-indigo-500 to-purple-500 hover:opacity-90 py-2 text-white font-medium shadow-[0_0_15px_rgba(99,102,241,0.3)] transition-opacity" onClick={()=>handleUpgrade("starter")}>
 
                   Upgrade
 
@@ -263,7 +263,7 @@ export default function BillingDrawer({
 
                 </p>
 
-                <button className="mt-4 w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 py-2 text-white" onClick={()=>handleUpgrade("pro")}>
+                <button className="mt-4 w-full rounded-lg bg-gradient-to-r from-teal-400 via-indigo-500 to-purple-500 hover:opacity-90 py-2 text-white font-medium shadow-[0_0_15px_rgba(99,102,241,0.3)] transition-opacity" onClick={()=>handleUpgrade("pro")}>
 
                   Upgrade
 

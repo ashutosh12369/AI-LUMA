@@ -621,7 +621,7 @@ isListening
               ${isLoading
                 ? "bg-white text-[#0d0f14] hover:bg-slate-200"
                 : value.trim()
-                ? "bg-gradient-to-r from-indigo-500 to-purple-500 hover:opacity-90 text-white shadow-indigo-500/30"
+                ? "bg-gradient-to-r from-teal-400 via-indigo-500 to-purple-500 hover:opacity-90 text-white shadow-indigo-500/30"
                 : "bg-white/10 text-slate-500 cursor-not-allowed shadow-none"
               }`}
           >
