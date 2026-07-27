@@ -179,18 +179,20 @@ if (latestArtifactMessage) {
   return (
     <div ref={scrollContainerRef} className="relative flex-1 overflow-y-auto px-3 md:px-6 py-4 md:py-6 space-y-4 md:space-y-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {messages.length === 0 && !isLoading ? (
-        <div className="h-full flex flex-col items-center justify-center text-center px-4 w-full max-w-5xl mx-auto">
+        <div className="h-full flex flex-col items-center justify-start md:justify-center text-center px-0 md:px-4 w-full max-w-5xl mx-auto pb-4 pt-2 md:pt-0">
           
-          <Logo />
+          <div className="scale-75 md:scale-100 transform origin-top mb-[-1rem] md:mb-0">
+            <Logo />
+          </div>
 
-          <h3 className="text-[24px] mt-2 font-medium text-slate-200 tracking-tight">
+          <h3 className="text-[20px] md:text-[24px] mt-0 md:mt-2 font-medium text-slate-200 tracking-tight">
             How can I help you?
           </h3>
-          <p className="text-[15px] text-slate-400 mt-2 mb-10 max-w-[400px] leading-relaxed">
+          <p className="text-[13px] md:text-[15px] text-slate-400 mt-1.5 md:mt-2 mb-4 md:mb-10 max-w-[400px] leading-relaxed px-4">
             Ask me anything — code, ideas, explanations, or just a quick question.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+          <div className="flex md:grid md:grid-cols-3 gap-3 md:gap-4 w-full overflow-x-auto snap-x snap-mandatory px-4 md:px-0 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {[
               {
                 title: "CODE GENERATION:",
@@ -214,18 +216,18 @@ if (latestArtifactMessage) {
               <button
                 key={idx}
                 onClick={() => handleSuggestionClick(card.prompt)}
-                className="glass-card flex flex-col items-start text-left p-5 rounded-2xl cursor-pointer hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 group"
+                className="glass-card flex flex-col items-start text-left p-4 md:p-5 rounded-2xl cursor-pointer hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 group shrink-0 w-[260px] md:w-auto snap-center"
               >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-indigo-500/20 group-hover:border-indigo-500/30 transition-colors">
-                    <span className="text-xl opacity-80">{idx === 0 ? "N" : idx === 1 ? "📚" : "📊"}</span>
+                <div className="flex items-center gap-2.5 md:gap-3 mb-2 md:mb-3">
+                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-indigo-500/20 group-hover:border-indigo-500/30 transition-colors">
+                    <span className="text-lg md:text-xl opacity-80">{idx === 0 ? "N" : idx === 1 ? "📚" : "📊"}</span>
                   </div>
                   <div>
-                    <p className="text-[10px] font-semibold text-slate-500 tracking-wider uppercase">{card.title}</p>
-                    <p className="text-[15px] font-medium text-slate-200 group-hover:text-white transition-colors">{card.subtitle}</p>
+                    <p className="text-[9px] md:text-[10px] font-semibold text-slate-500 tracking-wider uppercase">{card.title}</p>
+                    <p className="text-[13px] md:text-[15px] font-medium text-slate-200 group-hover:text-white transition-colors">{card.subtitle}</p>
                   </div>
                 </div>
-                <p className="text-[13px] text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">
+                <p className="text-[12px] md:text-[13px] text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">
                   {card.desc}
                 </p>
               </button>
