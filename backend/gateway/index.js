@@ -24,7 +24,6 @@ app.use(
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(cookieParser());
-app.use(express.json());
 const getServiceUrl = (serviceName) => {
   const nameMap = {
     "AUTH_SERVICE": "https://ailuma-auth-service.onrender.com",
