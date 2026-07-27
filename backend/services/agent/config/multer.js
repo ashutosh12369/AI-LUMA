@@ -42,7 +42,9 @@ const fileFilter=(req,file,cb)=>{
 
         file.mimetype==="application/pdf" ||
 
-        file.mimetype.startsWith("image/")
+        file.mimetype.startsWith("image/") ||
+        file.mimetype === "text/csv" ||
+        file.originalname.endsWith(".csv")
 
     ){
 
@@ -56,7 +58,7 @@ const fileFilter=(req,file,cb)=>{
 
             new Error(
 
-                "Only PDF and Images are allowed."
+                "Only PDF, Images, and CSV are allowed."
 
             )
 
