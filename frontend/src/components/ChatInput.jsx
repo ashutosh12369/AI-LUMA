@@ -356,7 +356,7 @@ catch(error){
 
             ${
               isActive
-                ? "bg-gradient-to-r from-teal-400/80 via-indigo-500/80 to-purple-500/80 text-white border-transparent shadow-[0_1px_8px_rgba(99,102,241,.35)]"
+                ? "bg-gradient-to-r from-indigo-500 to-violet-600 text-white border-transparent shadow-[0_1px_8px_rgba(99,102,241,.35)]"
                 : "bg-white/[0.03] text-slate-400 border-white/[0.06] hover:bg-white/[0.07]"
             }
           `}
