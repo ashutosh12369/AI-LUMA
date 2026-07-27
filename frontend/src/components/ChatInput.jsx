@@ -315,11 +315,6 @@ catch(error){
 
 
     <div className="flex items-center w-full gap-2 pr-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-2 border-b border-white/5">
-    
-    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-slate-400 bg-white/5 mr-2 shrink-0 border border-white/5">
-      <Wand2 size={13} className="text-slate-500" />
-      Creation Tools
-    </div>
 
     <button
       onClick={() => setIsAutonomous(!isAutonomous)}

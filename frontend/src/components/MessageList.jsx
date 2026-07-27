@@ -193,22 +193,22 @@ if (latestArtifactMessage) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
             {[
               {
-                title: "CODE TEMPLATE:",
-                subtitle: "Netflix Clone",
-                desc: "Generate a basic UI and data structure.",
-                prompt: "Write a Netflix clone"
+                title: "CODE GENERATION:",
+                subtitle: "Software Development",
+                desc: "Generate complete applications or components.",
+                prompt: "Write a React application"
               },
               {
                 title: "EXPLANATION:",
-                subtitle: "Redis & Datastructures",
-                desc: "Understand key-value stores.",
-                prompt: "Explain Redis"
+                subtitle: "Complex Concepts",
+                desc: "Break down and explain difficult topics.",
+                prompt: "Explain quantum computing simply"
               },
               {
-                title: "DASHBOARD:",
-                subtitle: "Visualizing Data",
-                desc: "Create a visual summary.",
-                prompt: "Build a dashboard"
+                title: "DATA ANALYSIS:",
+                subtitle: "Data Visualization",
+                desc: "Analyze and visualize your datasets.",
+                prompt: "Analyze this data for trends"
               }
             ].map((card, idx) => (
               <button
