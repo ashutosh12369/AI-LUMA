@@ -34,9 +34,9 @@ const getServiceUrl = (serviceName) => {
   return nameMap[serviceName] || process.env[serviceName];
 };
 
-app.use("/api/auth",proxy(getServiceUrl("AUTH_SERVICE")))
+app.use("/api/auth",proxy(getServiceUrl("AUTH_SERVICE"), { parseReqBody: false }))
 app.use("/api/me",protect,getCurrentUser)
-app.use("/api/chat/shared", proxy(getServiceUrl("CHAT_SERVICE")))
+app.use("/api/chat/shared", proxy(getServiceUrl("CHAT_SERVICE"), { parseReqBody: false }))
 app.use("/api/chat",protect,proxyWithUser(getServiceUrl("CHAT_SERVICE")))
 app.use("/api/agent",protect,proxyWithUser(getServiceUrl("AGENT_SERVICE")))
 app.use("/api/billing",protect,proxyWithUser(getServiceUrl("BILLING_SERVICE")))

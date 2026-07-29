@@ -6,7 +6,7 @@ export const proxyWithUser =
  return proxy(
   serviceUrl,
   {
-
+   parseReqBody: false,
    proxyReqOptDecorator:
    (proxyReqOpts, srcReq)=>{
 
@@ -34,12 +34,6 @@ export const proxyWithUser =
 
     return proxyReqOpts;
 
-   },
-   proxyReqBodyDecorator: (bodyContent, srcReq) => {
-     if (srcReq.body && Object.keys(srcReq.body).length > 0) {
-       return JSON.stringify(srcReq.body);
-     }
-     return bodyContent;
    }
 
   }
