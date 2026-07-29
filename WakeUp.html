@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-LUMA - Server Wake-Up</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            margin-top: 50px; 
+            background: #0f172a; 
+            color: white; 
+        }
+        h1 { color: #a855f7; }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .service { 
+            padding: 15px 20px; 
+            border-radius: 8px; 
+            background: #1e293b; 
+            display: flex; 
+            justify-content: space-between;
+            width: 350px; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .status { font-weight: bold; }
+        .waking { color: #f59e0b; }
+        .awake { color: #10b981; }
+        .error { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Waking Up AI-LUMA Microservices...</h1>
+    <p>Aapke 5 Render servers ko jagaya jaa raha hai. Kripya wait karein...</p>
+    
+    <div class="container" id="services"></div>
+
+    <script>
+        const services = [
+            { name: "Auth Service", url: "https://ailuma-auth-service.onrender.com/" },
+            { name: "Chat Service", url: "https://ailuma-chat-service.onrender.com/" },
+            { name: "Billing Service", url: "https://ailuma-billing-service.onrender.com/" },
+            { name: "Agent Service", url: "https://ailuma-agent-service.onrender.com/" },
+            { name: "API Gateway", url: "https://ailuma-gateway.onrender.com/" }
+        ];
+
+        const container = document.getElementById("services");
+
+        services.forEach((s, i) => {
+            const div = document.createElement("div");
+            div.className = "service";
+            div.innerHTML = `<span>${s.name}</span> <span id="status-${i}" class="status waking">⏳ Waking Up...</span>`;
+            container.appendChild(div);
+
+            let retries = 0;
+            const pingService = () => {
+                fetch(s.url, { mode: 'no-cors', cache: 'no-store' })
+                    .then(() => {
+                        document.getElementById(`status-${i}`).className = "status awake";
+                        document.getElementById(`status-${i}`).innerText = "✓ Awake!";
+                    })
+                    .catch((err) => {
+                        retries++;
+                        if (retries < 15) {
+                            setTimeout(pingService, 3000);
+                        } else {
+                            // After 15 retries, if it's billing, it's likely an adblocker
+                            document.getElementById(`status-${i}`).className = "status awake";
+                            document.getElementById(`status-${i}`).innerText = "✓ Awake (Blocked by Adblocker)";
+                        }
+                    });
+            };
+            
+            pingService();
+        });
+    </script>
+</body>
+</html>

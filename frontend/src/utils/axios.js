@@ -24,7 +24,8 @@ api.interceptors.response.use(
     }
     
     config.retryCount = config.retryCount || 0;
-    const maxRetries = 3;
+    // Render free tier can take up to 80-100 seconds to wake up fully.
+    const maxRetries = 8;
     
     // Identify errors that are typical for sleeping Render instances
     const isColdStartError = 
@@ -37,8 +38,8 @@ api.interceptors.response.use(
     if (isColdStartError && config.retryCount < maxRetries) {
       config.retryCount += 1;
       
-      // 12 seconds delay gives enough time for a service to wake up without keeping the user waiting forever
-      const delay = 12000; 
+      // 10 seconds delay between each retry
+      const delay = 10000; 
       
       console.log(`[Auto-Retry] Backend might be asleep. Retrying request... (Attempt ${config.retryCount}/${maxRetries})`);
       
