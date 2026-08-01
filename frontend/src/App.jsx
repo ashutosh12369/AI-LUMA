@@ -3,8 +3,14 @@ import {BrowserRouter, Route, Routes} from "react-router-dom"
 import Home from './pages/Home'
 import SharedArtifact from './pages/SharedArtifact'
 import useCurrentUser from './hooks/useCurrentUser'
+import { wakeUpServers } from './utils/wakeup'
+
 function App() {
   useCurrentUser()
+ 
+  useEffect(() => {
+    wakeUpServers();
+  }, []);
  
   return (
    <BrowserRouter>
