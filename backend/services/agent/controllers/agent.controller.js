@@ -43,11 +43,8 @@ await axios.post(`https://ailuma-chat-service.onrender.com/save-message`,{
 
   const result =
   await graph.invoke({
-
    prompt,
-
    conversationId,
-
    userId:
    req.headers[
     "x-user-id"
@@ -56,8 +53,7 @@ await axios.post(`https://ailuma-chat-service.onrender.com/save-message`,{
    file:req.file,
    githubToken: req.headers["x-github-token"],
    isAutonomous: isAutonomous === "true"
-
-  });
+  }, { recursionLimit: 150 });
 
 
   console.log("after res",result)
