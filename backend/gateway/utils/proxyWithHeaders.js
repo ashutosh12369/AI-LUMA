@@ -28,8 +28,8 @@ export const proxyWithUser = (serviceUrl) => {
         proxyReqOpts.headers["x-user-id"] = srcReq.user.userId;
 
         // Email aur avatar ko bhi headers me bhej rahe hain taaki dusre services directly access kar sake.
-        proxyReqOpts.headers["x-user-email"] = srcReq.user.email;
-        proxyReqOpts.headers["x-user-avatar"] = srcReq.user.avatar;
+        if (srcReq.user.email) proxyReqOpts.headers["x-user-email"] = srcReq.user.email;
+        if (srcReq.user.avatar) proxyReqOpts.headers["x-user-avatar"] = srcReq.user.avatar;
       }
 
       // Github token integration. Agar frontend se github token header me aaya hai,
