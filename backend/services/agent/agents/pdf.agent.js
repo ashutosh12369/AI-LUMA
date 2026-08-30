@@ -1,6 +1,7 @@
 import { checkAgentLimit } from "../config/agentRateLimit.js";
 import { deductCredits } from "../utils/deductCredits.js";
 import { getModel } from "../utils/model.js";
+import PDFDocument from "pdfkit";
 import { uploadToS3 } from "../utils/uploadToS3.js";
 import { getDownloadUrl } from "../utils/getDownloadUrl.js";
 import { SystemMessage, HumanMessage, AIMessage } from "@langchain/core/messages";
