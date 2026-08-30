@@ -37,17 +37,17 @@ export const getModel =
         return openRouter;
 
       case "image":
-        return groq;
+        return gemini;
 
       case "search":
-        return groq;
+        return gemini;
 
       case "chat":
-        return groq;
+        return gemini;
       case "vision":
         return gemini;
       default:
-        return groq;
+        return gemini;
 
     }
 
