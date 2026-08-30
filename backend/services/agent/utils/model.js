@@ -20,7 +20,7 @@ export const gemini =
   });
 
 const groq = new ChatGroq({
-  model: "llama-3.3-70b-versatile",
+  model: "llama-3.1-8b-instant",
   temperature: 0,
   maxTokens: undefined,
   maxRetries: 2,
