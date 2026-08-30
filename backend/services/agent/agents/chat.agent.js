@@ -1,3 +1,8 @@
+import { checkAgentLimit } from "../config/agentRateLimit.js";
+import { deductCredits } from "../utils/deductCredits.js";
+import { getModel } from "../utils/model.js";
+import { getMemory } from "../utils/memory.js";
+import { SystemMessage, HumanMessage, AIMessage } from "@langchain/core/messages";
 // 💡 WHAT: chatAgent function export ho raha hai jo user ke inputs ko process karke AI response generate karega.
 // ❓ WHY: Async isliye use kiya gaya hai kyuki database validation (limits), credit updates, aur AI API calls (I/O operations) me time lagta hai aur execution block nahi honi chahiye.
 export const chatAgent = async (state) => {
