@@ -1,3 +1,7 @@
+/**
+ * Memory Utility: Manages the Sliding Window context cache in Redis to optimize LLM token usage.
+ */
+
 import redis from "../../../shared/redis/redis.js";
 import { getConversationHistory } from "./getConv.js";
 

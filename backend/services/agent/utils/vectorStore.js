@@ -1,3 +1,7 @@
+/**
+ * Vector Store Utility: Interfaces with Pinecone/Qdrant to store and retrieve RAG embeddings.
+ */
+
 import { QdrantVectorStore }
 from "@langchain/qdrant";
 import { embeddings } from "./embedding.js";

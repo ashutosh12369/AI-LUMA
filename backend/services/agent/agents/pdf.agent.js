@@ -1,3 +1,7 @@
+/**
+ * PDF Agent: Generates downloadable PDF documents based on user specifications.
+ */
+
 import { checkAgentLimit } from "../config/agentRateLimit.js";
 import { deductCredits } from "../utils/deductCredits.js";
 import { getModel } from "../utils/model.js";

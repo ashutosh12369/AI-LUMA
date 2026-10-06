@@ -1,3 +1,7 @@
+/**
+ * Auth Routes: Defines endpoints for login, logout, and session management.
+ */
+
 import express from "express";
 
 import {

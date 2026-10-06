@@ -1,3 +1,7 @@
+/**
+ * Billing Controller: Processes Razorpay orders, verifies webhook signatures, and updates user plans.
+ */
+
 import razorpay from "../config/razorpay.js";
 import { PLANS } from "../config/plans.js";
 import Payment from "../models/payment.model.js";

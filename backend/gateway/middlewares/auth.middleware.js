@@ -1,3 +1,7 @@
+/**
+ * Authentication Middleware: Intercepts requests to verify session validity in Redis before forwarding to microservices.
+ */
+
 import redis from "../../shared/redis/redis.js";
 export const protect = async (req, res, next) => {
   try {

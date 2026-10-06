@@ -1,3 +1,7 @@
+/**
+ * Image Generation Agent: Creates visual assets and UI mockups using generative image models.
+ */
+
 import axios from "axios";
 import { getModel } from "../utils/model.js";
 import { uploadToS3 } from "../utils/uploadToS3.js";

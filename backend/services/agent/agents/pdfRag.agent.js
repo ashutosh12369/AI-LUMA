@@ -1,3 +1,7 @@
+/**
+ * RAG Agent: Extracts and analyzes text from uploaded PDFs using Pinecone vector embeddings.
+ */
+
 import fs from "fs"; 
 
 import {PDFParse} from "pdf-parse"; 

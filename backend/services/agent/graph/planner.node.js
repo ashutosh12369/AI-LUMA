@@ -1,3 +1,7 @@
+/**
+ * Planner Node: Generates step-by-step execution plans for complex tasks in Auto-Pilot mode.
+ */
+
 export const plannerNode = async (state) => {
   if (!state.isAutonomous) {
     return state;

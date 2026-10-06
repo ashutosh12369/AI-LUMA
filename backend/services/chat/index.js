@@ -1,3 +1,7 @@
+/**
+ * Chat Service Entry: Initializes the chat microservice handling database persistence for conversations.
+ */
+
 import express from "express";
 import dotenv from "dotenv";
 import router from "./routes/chat.routes.js";

@@ -1,3 +1,7 @@
+/**
+ * LangGraph Supervisor: The core StateMachine workflow that routes user prompts to specialized AI agents.
+ */
+
 import { StateGraph } from "@langchain/langgraph";
 import { AgentState } from "./state.js";
 import { routerNode } from "./router.node.js";

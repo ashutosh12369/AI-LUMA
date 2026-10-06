@@ -1,3 +1,7 @@
+/**
+ * Agent Controller: Manages the LangGraph execution flow, context retrieval from Redis, and streaming responses back to the client.
+ */
+
 import redis from "../../../shared/redis/redis.js";
 import { graph } from "../graph/supervisor.graph.js";
 import { addMessage } from "../utils/memory.js";

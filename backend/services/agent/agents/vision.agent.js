@@ -1,3 +1,7 @@
+/**
+ * Vision Agent: Analyzes user-uploaded images and extracts relevant visual context.
+ */
+
 import fs from "fs/promises";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { getModel } from "../utils/model.js";

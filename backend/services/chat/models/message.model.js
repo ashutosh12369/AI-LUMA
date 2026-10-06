@@ -1,3 +1,7 @@
+/**
+ * Message Model: Polymorphic Mongoose schema storing AI/User messages and structured artifacts (code, SVG).
+ */
+
 import mongoose from "mongoose";
 
 const fileSchema =

@@ -1,3 +1,7 @@
+/**
+ * Coding Agent: Specialized in generating, debugging, and explaining software code.
+ */
+
 import { checkAgentLimit } from "../config/agentRateLimit.js";
 import { deductCredits } from "../utils/deductCredits.js";
 import { getModel } from "../utils/model.js";

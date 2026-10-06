@@ -1,3 +1,7 @@
+/**
+ * Chat Controller: Handles CRUD operations for conversations, messages, and shared artifacts.
+ */
+
 import Conversation from "../models/conversation.model.js";
 import SharedArtifact from "../models/sharedArtifact.model.js";
 import crypto from "crypto";

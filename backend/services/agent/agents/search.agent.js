@@ -1,3 +1,7 @@
+/**
+ * Search Agent: Uses the Tavily API to perform real-time web searches and summarize internet data.
+ */
+
 import { checkAgentLimit } from "../config/agentRateLimit.js";
 import { deductCredits } from "../utils/deductCredits.js";
 import { searchTool } from "../utils/tavily.js";

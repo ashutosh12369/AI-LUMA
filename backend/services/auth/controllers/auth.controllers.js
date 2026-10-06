@@ -1,3 +1,7 @@
+/**
+ * Auth Controller: Handles user session creation, Firebase OAuth verification, and session storage in Redis.
+ */
+
 import crypto from "crypto";
 
 import { getAuth }

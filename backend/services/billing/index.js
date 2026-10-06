@@ -1,3 +1,7 @@
+/**
+ * Billing Service Entry: Initializes the billing microservice for subscription and payment processing.
+ */
+
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";

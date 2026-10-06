@@ -1,3 +1,7 @@
+/**
+ * Data Agent: Processes CSV/Excel files and generates data visualizations.
+ */
+
 import { getModel } from "../utils/model.js";
 import { checkAgentLimit } from "../config/agentRateLimit.js";
 import { deductCredits } from "../utils/deductCredits.js";

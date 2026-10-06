@@ -1,3 +1,7 @@
+/**
+ * Chat Routes: Defines REST endpoints for message retrieval and chat history management.
+ */
+
 import express from "express";
 import { 
     createConversation, 

@@ -1,3 +1,7 @@
+/**
+ * Chat Agent: Handles general conversational queries and standard AI interactions.
+ */
+
 import { checkAgentLimit } from "../config/agentRateLimit.js";
 import { deductCredits } from "../utils/deductCredits.js";
 import { getModel } from "../utils/model.js";

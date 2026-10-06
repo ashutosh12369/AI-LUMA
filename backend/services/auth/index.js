@@ -1,3 +1,7 @@
+/**
+ * Auth Service Entry: Initializes the authentication microservice and establishes MongoDB connections.
+ */
+
 import express from "express";
 import cors from "cors";
 import connectDB from "./config/db.js";

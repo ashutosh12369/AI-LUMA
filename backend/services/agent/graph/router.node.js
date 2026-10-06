@@ -1,3 +1,7 @@
+/**
+ * Router Node: Analyzes the prompt intent and decides the next step in the agentic workflow.
+ */
+
 import { getModel } from "../utils/model.js";
 export const routerNode = 
 async(state)=>{

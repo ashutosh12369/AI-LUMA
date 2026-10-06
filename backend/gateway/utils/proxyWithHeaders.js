@@ -1,3 +1,7 @@
+/**
+ * Proxy Utility: Forwards incoming requests to internal microservices while securely injecting the authenticated user ID.
+ */
+
 import proxy from "express-http-proxy";
 export const proxyWithUser = (serviceUrl) => {
   return proxy(serviceUrl, {

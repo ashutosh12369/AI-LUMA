@@ -1,3 +1,7 @@
+/**
+ * Graph State: Defines the TypeScript-like state structure flowing through the LangGraph nodes.
+ */
+
 import { Annotation } from "@langchain/langgraph";
 export const AgentState =
 Annotation.Root({

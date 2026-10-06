@@ -1,3 +1,7 @@
+/**
+ * API Gateway: Serves as the single entry point, handles routing, rate limiting, and session verification via Redis.
+ */
+
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";

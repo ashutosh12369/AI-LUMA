@@ -1,3 +1,7 @@
+/**
+ * User Model: Mongoose schema defining the user data structure, including credits and subscription tier.
+ */
+
 import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
   firebaseUid: {

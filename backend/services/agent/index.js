@@ -1,3 +1,7 @@
+/**
+ * Agent Service Entry: Initializes the core AI orchestration service and connects to the OpenRouter API.
+ */
+
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";

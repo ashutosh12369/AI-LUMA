@@ -1,3 +1,7 @@
+/**
+ * Conversation Model: Mongoose schema tracking chat threads and their respective users.
+ */
+
 import mongoose from "mongoose";
 
 const conversationSchema =new mongoose.Schema({

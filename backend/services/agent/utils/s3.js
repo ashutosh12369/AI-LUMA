@@ -1,3 +1,7 @@
+/**
+ * S3 Config: Configures the AWS SDK for uploading binary artifacts to object storage.
+ */
+
 import { S3Client } from "@aws-sdk/client-s3";
 
 export const s3 = new S3Client({
