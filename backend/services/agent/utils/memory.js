@@ -1,7 +1,6 @@
 import redis from "../../../shared/redis/redis.js";
 import { getConversationHistory } from "./getConv.js";
 
-
 export const getMemory =
 async(conversationId)=>{
 
@@ -41,7 +40,6 @@ async(conversationId)=>{
  return messages;
 
 };
-
 
 export const addMessage =
 async(

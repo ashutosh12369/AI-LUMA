@@ -2,8 +2,6 @@ import { QdrantVectorStore }
 from "@langchain/qdrant";
 import { embeddings } from "./embedding.js";
 
-
-
 export const createVectorStore =
 async(
 

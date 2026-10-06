@@ -12,7 +12,7 @@ export const deductCredits = async (
 
         await axios.patch(
 
-            `https://ailuma-auth-service.onrender.com/internal/deduct-credits`,
+            `https:
 
             {
 

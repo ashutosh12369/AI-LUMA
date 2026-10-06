@@ -1,67 +1,34 @@
-import { Annotation } from "@langchain/langgraph"; // Langgraph se Annotation import kar rahe hain, ye state ko define karne me madad karta hai (What)
-
-// AgentState object export kar rahe hain jo pure agent system ka state store karega.
-// Interview prep: Langgraph me agents stateful hote hain, har step ke baad state update hoti hai (Why)
+import { Annotation } from "@langchain/langgraph";
 export const AgentState =
-Annotation.Root({
-
- // prompt: User se milne wala input prompt store karne ke liye (What)
+Annotation.Root({
  prompt:
- Annotation(),
-
- // conversationId: Har session/conversation ka unique id track karne ke liye, taki context maintain rahe (Why)
+ Annotation(),
  conversationId:
- Annotation(),
-
- // userId: Kis user ne request ki hai, authentication/authorization ya personal data ke liye (Why)
+ Annotation(),
  userId:
- Annotation(),
-
- // agent: Current active agent ya sub-agent ka data store karne ke liye (What)
+ Annotation(),
  agent:
- Annotation(),
-
- // response: Agent ka final generated response yaha aayega (What)
+ Annotation(),
  response:
- Annotation(),
-
- // images: Agar process me koi images involve/generate hui hain, unhe track karne ke liye (What)
+ Annotation(),
  images:
-  Annotation(),
-
- // model: Kaunsa AI model use karna hai (e.g., GPT-4, Claude), isko configure karne ke liye (Why)
+  Annotation(),
  model:
- Annotation(),
-
- // file: Uploaded files ko track karne ke liye, jo user as input provide karta hai (What)
+ Annotation(),
   file:
- Annotation(),
-
- // artifacts: Agent dwara create kiye gaye structured documents/files ko hold karne ke liye (Why)
+ Annotation(),
  artifacts:
- Annotation(),
-
- // searchResults: Web search ke results ko temporary memory me rakhne ke liye taki model padh sake (Why)
+ Annotation(),
  searchResults:
- Annotation(),
-
- // codeContext: Codebase ka context ya snippets jise agent code tasks ke liye refer karega (Why)
+ Annotation(),
  codeContext:
- Annotation(),
-
- // pdfContext: PDF document se extract kiya hua text ya data yaha store hoga (What)
+ Annotation(),
  pdfContext:
- Annotation(),
-
- // githubToken: Github API calls karne ke liye auth token, taki repos access kar sake (Why)
+ Annotation(),
  githubToken:
- Annotation(),
-
- // isAutonomous: Ye flag decide karta hai ki agent loop me chalega (autonomous) ya ek baar response dega (Why)
+ Annotation(),
  isAutonomous:
- Annotation(),
-
- // taskPlan: Agent ka step-by-step plan store karne ke liye, taki wo apni progress track kar sake (Why)
+ Annotation(),
  taskPlan:
  Annotation()
 
